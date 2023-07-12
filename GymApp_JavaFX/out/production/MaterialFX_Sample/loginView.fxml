@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import io.github.palexdev.materialfx.controls.MFXPasswordField?>
+<?import io.github.palexdev.materialfx.controls.MFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-color: #000000; -fx-border-width: .4px;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="300.0" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: #fff;">
+         <children>
+            <MFXTextField floatingText="Ingrese usuario..." layoutX="22.0" layoutY="155.0" prefHeight="28.0" prefWidth="254.0" />
+            <MFXPasswordField floatingText="Ingrese contraseña..." layoutX="22.0" layoutY="225.0" prefHeight="50.0" prefWidth="254.0" />
+            <MFXButton buttonType="RAISED" layoutX="22.0" layoutY="294.0" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: linear-gradient(to top right, #2c2c57, #392b78); -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Entrar" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </MFXButton>
+            <Label alignment="CENTER" layoutX="23.0" layoutY="34.0" prefHeight="91.0" prefWidth="254.0" text="Iniciar Sesión" textFill="#392b78">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="1.0" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: linear-gradient(to bottom right, #2c2c57, #392b78); -fx-border-color: #000000; -fx-border-width: .4px;">
+         <children>
+            <Label alignment="CENTER" layoutX="11.0" layoutY="156.0" prefHeight="91.0" prefWidth="280.0" text="Administración Gimnasio" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="70.0" layoutY="266.0" prefHeight="18.0" prefWidth="162.0" text="Crear una nueva cuenta" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <MFXButton layoutX="23.0" layoutY="295.0" prefHeight="50.0" prefWidth="254.0" style="-fx-background-color: transparent; -fx-text-fill: #fff; -fx-cursor: hand; -fx-border-color: #fff; -fx-border-width: .5px;" text="Registrarse" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </MFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
