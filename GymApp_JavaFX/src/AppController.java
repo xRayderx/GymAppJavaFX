@@ -77,7 +77,7 @@ public class AppController {
                 alerta.showAndWait();
 
             }else{
-                if(resultado.next()){
+                if(!resultado.next()){
                     alerta = new Alert(Alert.AlertType.INFORMATION);
                     alerta.setTitle("Mensaje de informacion");
                     alerta.setHeaderText(null);
