@@ -1,14 +1,21 @@
 import io.github.palexdev.materialfx.controls.MFXButton;
 import io.github.palexdev.materialfx.controls.MFXPasswordField;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import javafx.animation.TranslateTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import javafx.animation.TranslateTransition;
+import javafx.event.ActionEvent;
+import javafx.util.Duration;
 
 public class AppController {
 
@@ -17,6 +24,9 @@ public class AppController {
 
     @FXML
     private MFXButton la_registroBtn;
+
+    @FXML
+    private MFXButton la_loginBtn;
 
     @FXML
     private Label la_registroLabel;
@@ -146,7 +156,44 @@ public class AppController {
         }
 
     }
-    public void main_close() {
+
+    public void registroSlider(){
+
+        TranslateTransition slider1 = new TranslateTransition();
+        slider1.setNode(la_left);
+        slider1.setToX(300);
+        slider1.setDuration(Duration.seconds(0.5));
+        slider1.play();
+
+        slider1.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                la_registroLabel.setText("Registrate");
+                la_registroBtn.setVisible(false);
+                la_loginBtn.setVisible(true);
+            }
+        });
+
+    }
+
+    public void loginSlider(){
+
+        TranslateTransition slider1 = new TranslateTransition();
+        slider1.setNode(la_left);
+        slider1.setToX(0);
+        slider1.setDuration(Duration.seconds(.5));
+        slider1.play();
+
+        slider1.setOnFinished(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                la_registroLabel.setText("Inicio de sesion");
+                la_registroBtn.setVisible(true);
+                la_loginBtn.setVisible(false);
+            }
+        });
+    }
+    public void mainClose() {
         javafx.application.Platform.exit();
     }
 }

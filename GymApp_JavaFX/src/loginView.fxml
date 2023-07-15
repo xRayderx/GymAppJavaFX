@@ -11,8 +11,8 @@
    <children>
       <AnchorPane fx:id="login_form" layoutX="300.0" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: #fff;">
          <children>
-            <MFXTextField fx:id="si_usuario" floatingText="Ingrese usuario..." layoutX="22.0" layoutY="155.0" prefHeight="28.0" prefWidth="254.0" />
-            <MFXPasswordField fx:id="si_pass" floatingText="Ingrese contraseña..." layoutX="22.0" layoutY="225.0" prefHeight="50.0" prefWidth="254.0" />
+            <MFXTextField fx:id="si_usuario" floatingText="Ingrese usuario..." layoutX="22.0" layoutY="155.0" onAction="#login" prefHeight="28.0" prefWidth="254.0" />
+            <MFXPasswordField fx:id="si_pass" floatingText="Ingrese contraseña..." layoutX="22.0" layoutY="225.0" onAction="#login" prefHeight="50.0" prefWidth="254.0" />
             <MFXButton fx:id="si_loginBtn" buttonType="RAISED" layoutX="22.0" layoutY="294.0" onAction="#login" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: linear-gradient(to top right, #2c2c57, #392b78); -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Entrar" textFill="WHITE">
                <font>
                   <Font name="Arial" size="14.0" />
@@ -23,25 +23,6 @@
                   <Font size="36.0" />
                </font>
             </Label>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="la_left" layoutY="1.0" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: linear-gradient(to bottom right, #2c2c57, #392b78); -fx-border-color: #000000; -fx-border-width: .4px;" visible="false">
-         <children>
-            <Label alignment="CENTER" layoutX="11.0" layoutY="156.0" prefHeight="91.0" prefWidth="280.0" text="Administración Gimnasio" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
-            <Label fx:id="la_registroLabel" alignment="CENTER" layoutX="70.0" layoutY="266.0" prefHeight="18.0" prefWidth="162.0" text="Crear una nueva cuenta" textFill="WHITE">
-               <font>
-                  <Font name="Arial" size="14.0" />
-               </font>
-            </Label>
-            <MFXButton fx:id="la_registroBtn" layoutX="23.0" layoutY="295.0" prefHeight="50.0" prefWidth="254.0" style="-fx-background-color: transparent; -fx-text-fill: #fff; -fx-cursor: hand; -fx-border-color: #fff; -fx-border-width: .5px;" text="Registrarse" textFill="WHITE">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </MFXButton>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="reg_form" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #fff;">
@@ -61,6 +42,30 @@
             </Label>
          </children>
       </AnchorPane>
-      <MFXButton fx:id="main_close" onAction="#main_close" text="EQUIS" AnchorPane.leftAnchor="545.0" />
+      <AnchorPane fx:id="la_left" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: linear-gradient(to bottom right, #2c2c57, #392b78); -fx-border-color: #000000; -fx-border-width: .4px;">
+         <children>
+            <Label alignment="CENTER" layoutX="11.0" layoutY="156.0" prefHeight="91.0" prefWidth="280.0" text="Administración Gimnasio" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="la_registroLabel" alignment="CENTER" layoutX="70.0" layoutY="266.0" prefHeight="18.0" prefWidth="162.0" text="Crear una nueva cuenta" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <MFXButton fx:id="la_registroBtn" layoutX="23.0" layoutY="295.0" onAction="#registroSlider" prefHeight="50.0" prefWidth="254.0" style="-fx-background-color: transparent; -fx-text-fill: #fff; -fx-cursor: hand; -fx-border-color: #fff; -fx-border-width: .5px;" text="Registrarse" textFill="WHITE">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </MFXButton>
+            <MFXButton fx:id="la_loginBtn" layoutX="24.0" layoutY="295.0" onAction="#loginSlider" prefHeight="50.0" prefWidth="254.0" style="-fx-background-color: transparent; -fx-text-fill: #fff; -fx-cursor: hand; -fx-border-color: #fff; -fx-border-width: .5px;" text="Inicia Sesion" textFill="WHITE" visible="false">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </MFXButton>
+         </children>
+      </AnchorPane>
+      <MFXButton fx:id="main_close" onAction="#mainClose" text="EQUIS" AnchorPane.leftAnchor="545.0" />
    </children>
 </AnchorPane>
