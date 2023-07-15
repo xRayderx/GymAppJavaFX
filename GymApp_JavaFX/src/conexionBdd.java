@@ -3,7 +3,7 @@ import java.sql.DriverManager;
 
 public class conexionBdd {
 
-    public Connection conexion(String dbname, String user, String pass) {
+    public static Connection conexion(String dbname, String user, String pass) {
         Connection conexion = null;
 
         try {

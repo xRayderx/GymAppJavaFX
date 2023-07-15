@@ -16,9 +16,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        conexionBdd db=new conexionBdd();
-        db.conexion("ProyectoDB", "postgres","admin");
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("loginView.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
