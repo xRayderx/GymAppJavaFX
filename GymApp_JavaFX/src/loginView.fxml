@@ -25,7 +25,7 @@
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="la_left" layoutY="1.0" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: linear-gradient(to bottom right, #2c2c57, #392b78); -fx-border-color: #000000; -fx-border-width: .4px;">
+      <AnchorPane fx:id="la_left" layoutY="1.0" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: linear-gradient(to bottom right, #2c2c57, #392b78); -fx-border-color: #000000; -fx-border-width: .4px;" visible="false">
          <children>
             <Label alignment="CENTER" layoutX="11.0" layoutY="156.0" prefHeight="91.0" prefWidth="280.0" text="Administración Gimnasio" textFill="WHITE">
                <font>
@@ -44,12 +44,12 @@
             </MFXButton>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="reg_form" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #fff;" visible="false">
+      <AnchorPane fx:id="reg_form" prefHeight="400.0" prefWidth="300.0" style="-fx-background-color: #fff;">
          <children>
-            <MFXTextField fx:id="re_correo" floatingText="Ingrese correo..." layoutX="22.0" layoutY="85.0" prefHeight="28.0" prefWidth="254.0" />
-            <MFXTextField fx:id="re_usuario" floatingText="Ingrese usuario..." layoutX="22.0" layoutY="155.0" prefHeight="28.0" prefWidth="254.0" />
-            <MFXPasswordField fx:id="re_clave" floatingText="Ingrese contraseña..." layoutX="22.0" layoutY="225.0" prefHeight="50.0" prefWidth="254.0" />
-            <MFXButton fx:id="re_registrar" buttonType="RAISED" layoutX="22.0" layoutY="294.0" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: linear-gradient(to top right, #2c2c57, #392b78); -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Registrarse" textFill="WHITE">
+            <MFXTextField fx:id="re_correo" floatingText="Ingrese correo..." layoutX="22.0" layoutY="85.0" onAction="#registro" prefHeight="28.0" prefWidth="254.0" />
+            <MFXTextField fx:id="re_usuario" floatingText="Ingrese usuario..." layoutX="22.0" layoutY="155.0" onAction="#registro" prefHeight="28.0" prefWidth="254.0" />
+            <MFXPasswordField fx:id="re_clave" floatingText="Ingrese contraseña..." layoutX="22.0" layoutY="225.0" onAction="#registro" prefHeight="50.0" prefWidth="254.0" />
+            <MFXButton fx:id="re_registrar" buttonType="RAISED" layoutX="22.0" layoutY="294.0" onAction="#registro" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: linear-gradient(to top right, #2c2c57, #392b78); -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Registrarse" textFill="WHITE">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>

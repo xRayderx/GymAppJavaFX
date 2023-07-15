@@ -3,13 +3,15 @@ import java.sql.DriverManager;
 
 public class conexionBdd {
 
-    public static Connection conexion(String dbname, String user, String pass) {
+    public static Connection conexion() {
         Connection conexion = null;
 
         try {
             Class.forName("org.postgresql.Driver");
-            String schema = "public";
-            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres?currentSchema=" + schema + dbname, user, pass);
+            String dbname = "proyectodb";
+            String user = "postgres";
+            String pass = "admin";
+            conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, pass);
             if (conexion != null) {
                 System.out.println("Conexion a la base de datos establecida");
             } else {
@@ -18,6 +20,7 @@ public class conexionBdd {
 
         } catch (Exception e){
             System.out.println(e);
+            e.printStackTrace();
         }
         return conexion;
     }
