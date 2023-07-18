@@ -44,6 +44,5 @@ public class Main extends Application {
         primaryStage.setTitle("Gym App");
         primaryStage.show();
 
-
     }
 }
