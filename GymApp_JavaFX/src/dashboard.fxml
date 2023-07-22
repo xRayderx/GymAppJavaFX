@@ -65,23 +65,23 @@
                                  </font>
                               </Label>
                               <Line endX="100.0" layoutX="110.0" layoutY="158.0" startX="-100.0" stroke="#e6f1ff" />
-                              <MFXButton buttonType="RAISED" layoutX="20.0" layoutY="176.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Dashboard">
+                              <MFXButton fx:id="mainDashboardBtn" buttonType="RAISED" layoutX="20.0" layoutY="176.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Dashboard">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font></MFXButton>
-                              <MFXButton buttonType="RAISED" layoutX="20.0" layoutY="226.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Instructor">
+                              <MFXButton fx:id="mainInstructorBtn" buttonType="RAISED" layoutX="20.0" layoutY="226.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Instructor">
                                  <font>
                                     <Font name="Arial Bold" size="12.0" />
                                  </font></MFXButton>
-                              <MFXButton buttonType="RAISED" layoutX="20.0" layoutY="278.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Miembros">
+                              <MFXButton fx:id="mainMiembrosBtn" buttonType="RAISED" layoutX="20.0" layoutY="278.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Miembros">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></MFXButton>
-                              <MFXButton buttonType="RAISED" layoutX="20.0" layoutY="328.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Modulo Extra">
+                              <MFXButton fx:id="mainPagosBtn" buttonType="RAISED" layoutX="20.0" layoutY="328.0" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Modulo Extra">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></MFXButton>
-                              <MFXButton buttonType="RAISED" layoutX="45.0" layoutY="506.0" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Cerrar sesión">
+                              <MFXButton fx:id="mainLogoutBtn" buttonType="RAISED" layoutX="45.0" layoutY="506.0" prefHeight="35.0" prefWidth="130.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Cerrar sesión">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></MFXButton>
@@ -93,7 +93,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #;" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane layoutX="7.0" layoutY="6.0" prefHeight="555.0" prefWidth="881.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane layoutX="7.0" layoutY="6.0" prefHeight="555.0" prefWidth="881.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Separator layoutY="163.0" prefHeight="9.0" prefWidth="868.0" />
                               <AnchorPane layoutY="1.0" prefHeight="152.0" prefWidth="867.0" style="-fx-background-color: #2314;">
@@ -101,7 +101,7 @@
                                     <AnchorPane layoutX="14.0" layoutY="9.0" prefHeight="135.0" prefWidth="245.0" style="-fx-background-color: #efefef;">
                                        <children>
                                           <MFXButton layoutX="14.0" layoutY="23.0" prefHeight="90.0" prefWidth="100.0" text="ICONO" />
-                                          <Label alignment="CENTER_RIGHT" layoutX="163.0" layoutY="23.0" prefHeight="17.0" prefWidth="68.0" text="0">
+                                          <Label fx:id="totalMiembrosLabel" alignment="CENTER_RIGHT" layoutX="163.0" layoutY="23.0" prefHeight="17.0" prefWidth="68.0" text="0">
                                              <font>
                                                 <Font size="36.0" />
                                              </font>
@@ -116,7 +116,7 @@
                                     <AnchorPane layoutX="311.0" layoutY="9.0" prefHeight="135.0" prefWidth="245.0" style="-fx-background-color: #efefef;">
                                        <children>
                                           <MFXButton layoutX="14.0" layoutY="23.0" prefHeight="90.0" prefWidth="100.0" text="ICONO" />
-                                          <Label alignment="CENTER_RIGHT" layoutX="163.0" layoutY="23.0" prefHeight="17.0" prefWidth="68.0" text="0">
+                                          <Label fx:id="totalInstructoresLabel" alignment="CENTER_RIGHT" layoutX="163.0" layoutY="23.0" prefHeight="17.0" prefWidth="68.0" text="0">
                                              <font>
                                                 <Font size="36.0" />
                                              </font>
@@ -131,7 +131,7 @@
                                     <AnchorPane layoutX="608.0" layoutY="9.0" prefHeight="135.0" prefWidth="245.0" style="-fx-background-color: #efefef;">
                                        <children>
                                           <MFXButton layoutX="14.0" layoutY="23.0" prefHeight="90.0" prefWidth="100.0" text="ICONO" />
-                                          <Label alignment="CENTER_RIGHT" layoutX="163.0" layoutY="23.0" prefHeight="17.0" prefWidth="68.0" text="\$0.0">
+                                          <Label fx:id="totalIngresosLabel" alignment="CENTER_RIGHT" layoutX="163.0" layoutY="23.0" prefHeight="17.0" prefWidth="68.0" text="\$0.0">
                                              <font>
                                                 <Font size="36.0" />
                                              </font>
@@ -149,7 +149,7 @@
                                  <children>
                                     <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="324.0" prefWidth="830.0" style="-fx-background-color: #a12a;">
                                        <children>
-                                          <AreaChart layoutX="51.0" layoutY="-50.0" prefHeight="350.0" prefWidth="830.0" title="Ingreso mensual" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <AreaChart fx:id="ingresoMensualChart" layoutX="51.0" layoutY="-50.0" prefHeight="350.0" prefWidth="830.0" title="Ingreso mensual" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
@@ -167,13 +167,13 @@
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="275.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
                                  <children>
-                                    <MFXTextField layoutX="124.0" layoutY="27.0" minHeight="35.0" minWidth="80.0" prefHeight="35.0" prefWidth="130.0" />
+                                    <MFXTextField fx:id="cedulaInstructorAddField" layoutX="124.0" layoutY="27.0" minHeight="35.0" minWidth="80.0" prefHeight="35.0" prefWidth="130.0" />
                                     <Label layoutX="21.0" layoutY="35.0" style="-fx-text-fill: #e6f1ff;" text="ID de Instructor: ">
                                        <font>
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="84.0" layoutY="68.0" minHeight="25.0" minWidth="80.0" prefHeight="35.0" prefWidth="170.0" />
+                                    <MFXTextField fx:id="nombreInstructorAddField" layoutX="84.0" layoutY="68.0" minHeight="25.0" minWidth="80.0" prefHeight="35.0" prefWidth="170.0" />
                                     <Label layoutX="20.0" layoutY="76.0" style="-fx-text-fill: #e6f1ff;" text="Nombre: ">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
@@ -184,8 +184,8 @@
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="84.0" layoutY="109.0" prefHeight="61.0" prefWidth="170.0" />
-                                    <MFXComboBox layoutX="84.0" layoutY="176.0" prefHeight="35.0" prefWidth="170.0" promptText="Elige...">
+                                    <MFXTextField fx:id="direccionInstructorAddField" layoutX="84.0" layoutY="109.0" prefHeight="61.0" prefWidth="170.0" />
+                                    <MFXComboBox fx:id="sexoInstructorAddCombo" layoutX="84.0" layoutY="176.0" prefHeight="35.0" prefWidth="170.0" promptText="Elige...">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
@@ -195,31 +195,31 @@
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="124.0" layoutY="223.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="130.0" />
+                                    <MFXTextField fx:id="telefonoMovilInstructorAddField" layoutX="124.0" layoutY="223.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="130.0" />
                                     <Label layoutX="21.0" layoutY="230.0" style="-fx-text-fill: #e6f1ff;" text="Teléfono Móvil: ">
                                        <font>
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="124.0" layoutY="264.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="130.0" />
+                                    <MFXTextField fx:id="telefonoCasaInstructorAddField" layoutX="124.0" layoutY="264.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="130.0" />
                                     <Label layoutX="21.0" layoutY="271.0" style="-fx-text-fill: #e6f1ff;" text="Teléfono Casa: ">
                                        <font>
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <MFXButton buttonType="RAISED" layoutX="14.0" layoutY="341.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Añadir">
+                                    <MFXButton fx:id="addInstructorBtn" buttonType="RAISED" layoutX="14.0" layoutY="341.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Añadir">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXButton buttonType="RAISED" layoutX="144.0" layoutY="341.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Actualizar">
+                                    <MFXButton fx:id="editInstructorBtn" buttonType="RAISED" layoutX="144.0" layoutY="341.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Actualizar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXButton buttonType="RAISED" layoutX="14.0" layoutY="394.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Limpiar">
+                                    <MFXButton fx:id="cleanInstructorFieldBtn" buttonType="RAISED" layoutX="14.0" layoutY="394.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Limpiar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXButton buttonType="RAISED" layoutX="144.0" layoutY="394.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Eliminar">
+                                    <MFXButton fx:id="deleteInstructorBtn" buttonType="RAISED" layoutX="144.0" layoutY="394.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Eliminar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
@@ -227,7 +227,7 @@
                               </AnchorPane>
                               <AnchorPane layoutX="321.0" layoutY="14.0" prefHeight="527.0" prefWidth="547.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
                                  <children>
-                                    <MFXTableView layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="520.0" />
+                                    <MFXTableView fx:id="tablaInstructorTable" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="520.0" />
                                  </children>
                               </AnchorPane>
                               <Separator layoutX="302.0" layoutY="14.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="9.0" />
@@ -242,26 +242,26 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="201.0" layoutY="28.0" minHeight="35.0" prefHeight="35.0" prefWidth="95.0" />
+                                    <MFXTextField fx:id="cedulaCodigoClienteAddField" layoutX="201.0" layoutY="28.0" minHeight="35.0" prefHeight="35.0" prefWidth="95.0" />
                                     <Label layoutX="46.0" layoutY="78.0" text="Nombres:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="111.0" layoutY="70.0" minHeight="35.0" prefHeight="35.0" prefWidth="185.0" />
+                                    <MFXTextField fx:id="nombreClienteAddField" layoutX="111.0" layoutY="70.0" minHeight="35.0" prefHeight="35.0" prefWidth="185.0" />
                                     <Label layoutX="46.0" layoutY="120.0" text="Apellidos: ">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="111.0" layoutY="112.0" minHeight="35.0" prefHeight="35.0" prefWidth="185.0" />
+                                    <MFXTextField fx:id="apellidoClienteAddField" layoutX="111.0" layoutY="112.0" minHeight="35.0" prefHeight="35.0" prefWidth="185.0" />
                                     <Label layoutX="14.0" layoutY="162.0" text="Telefono Movil:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <MFXTextField layoutX="111.0" layoutY="154.0" minHeight="35.0" prefHeight="35.0" prefWidth="185.0" />
-                                    <MFXComboBox layoutX="111.0" layoutY="28.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="44.0" />
+                                    <MFXTextField fx:id="telefonoClienteAddField" layoutX="111.0" layoutY="154.0" minHeight="35.0" prefHeight="35.0" prefWidth="185.0" />
+                                    <MFXComboBox fx:id="cedulaLetraClienteCombo" layoutX="111.0" layoutY="28.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="44.0" />
                                     <Label layoutX="182.0" layoutY="35.0" text="-">
                                        <font>
                                           <Font size="14.0" />
@@ -282,7 +282,7 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <TextArea layoutX="428.0" layoutY="23.0" prefHeight="80.0" prefWidth="300.0" />
+                                    <TextArea fx:id="direccionClienteAddField" layoutX="428.0" layoutY="23.0" prefHeight="80.0" prefWidth="300.0" />
                                     <Label layoutX="623.0" layoutY="119.0" prefHeight="20.0" prefWidth="41.0" text="Sexo:">
                                        <font>
                                           <Font size="14.0" />
@@ -298,33 +298,33 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <MFXComboBox layoutX="661.0" layoutY="111.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" />
-                                    <MFXComboBox layoutX="661.0" layoutY="154.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" />
-                                    <MFXDatePicker layoutX="427.0" layoutY="152.0" prefHeight="38.0" prefWidth="170.0" />
-                                    <MFXDatePicker layoutX="427.0" layoutY="110.0" prefHeight="38.0" prefWidth="170.0" />
-                                    <MFXButton layoutX="799.0" layoutY="21.0" prefHeight="40.0" prefWidth="45.0" text="del" />
-                                    <MFXButton layoutX="799.0" layoutY="65.0" prefHeight="40.0" prefWidth="45.0" text="lim" />
-                                    <MFXButton layoutX="738.0" layoutY="21.0" prefHeight="40.0" prefWidth="45.0" text="+" />
-                                    <MFXButton layoutX="738.0" layoutY="65.0" prefHeight="40.0" prefWidth="45.0" text="act" />
+                                    <MFXComboBox fx:id="sexoClienteAddCombo" layoutX="661.0" layoutY="111.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" />
+                                    <MFXComboBox fx:id="estatusClienteAddCombo" layoutX="661.0" layoutY="154.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" />
+                                    <MFXDatePicker fx:id="fechaVencClienteAddDate" layoutX="427.0" layoutY="152.0" prefHeight="38.0" prefWidth="170.0" />
+                                    <MFXDatePicker fx:id="fechaInicioClienteAddDate" layoutX="427.0" layoutY="110.0" prefHeight="38.0" prefWidth="170.0" />
+                                    <MFXButton fx:id="deleteClienteBtn" layoutX="799.0" layoutY="21.0" prefHeight="40.0" prefWidth="45.0" text="del" />
+                                    <MFXButton fx:id="limpiarCamposClienteBtn" layoutX="799.0" layoutY="65.0" prefHeight="40.0" prefWidth="45.0" text="lim" />
+                                    <MFXButton fx:id="nuevoClienteAddBtn" layoutX="738.0" layoutY="21.0" prefHeight="40.0" prefWidth="45.0" text="+" />
+                                    <MFXButton fx:id="editClienteBtn" layoutX="738.0" layoutY="65.0" prefHeight="40.0" prefWidth="45.0" text="act" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="14.0" layoutY="241.0" prefHeight="300.0" prefWidth="855.0" style="-fx-background-color: #ab12;">
                                  <children>
-                                    <MFXTableColumn prefHeight="18.0" prefWidth="69.0" style="-fx-background-color: #fd64;" text="Cedula" />
-                                    <MFXTableColumn layoutX="72.0" style="-fx-background-color: #2d4f;" text="Nombres" />
-                                    <MFXTableColumn layoutX="172.0" style="-fx-background-color: #fd64;" text="Apellidos" />
-                                    <MFXTableColumn layoutX="272.0" style="-fx-background-color: #2d4f;" text="Telefono" />
-                                    <MFXTableColumn layoutX="372.0" prefHeight="18.0" prefWidth="160.0" style="-fx-background-color: #fd64;" text="Direccion" />
-                                    <MFXTableColumn layoutX="531.0" minWidth="41.0" prefHeight="18.0" prefWidth="41.0" style="-fx-background-color: #2d4f;" text="Sexo" />
-                                    <MFXTableColumn layoutX="572.0" style="-fx-background-color: #fd64;" text="F. Pago" />
-                                    <MFXTableColumn layoutX="672.0" style="-fx-background-color: #2d4f;" text="F. Vencimiento" />
-                                    <MFXTableColumn layoutX="778.0" minWidth="79.0" prefHeight="18.0" prefWidth="79.0" style="-fx-background-color: #fd64;" text="Estatus" />
+                                    <MFXTableColumn fx:id="cedulaTablaClienteCol" prefHeight="18.0" prefWidth="69.0" style="-fx-background-color: #fd64;" text="Cedula" />
+                                    <MFXTableColumn fx:id="nombreTablaClienteCol" layoutX="72.0" style="-fx-background-color: #2d4f;" text="Nombres" />
+                                    <MFXTableColumn fx:id="apellidoTablaClienteCol" layoutX="172.0" style="-fx-background-color: #fd64;" text="Apellidos" />
+                                    <MFXTableColumn fx:id="telefonoTablaClienteCol" layoutX="272.0" style="-fx-background-color: #2d4f;" text="Telefono" />
+                                    <MFXTableColumn fx:id="direccionTablaClienteCol" layoutX="372.0" prefHeight="18.0" prefWidth="160.0" style="-fx-background-color: #fd64;" text="Direccion" />
+                                    <MFXTableColumn fx:id="sexoTablaClienteCol" layoutX="531.0" minWidth="41.0" prefHeight="18.0" prefWidth="41.0" style="-fx-background-color: #2d4f;" text="Sexo" />
+                                    <MFXTableColumn fx:id="fechaPagoClienteCol" layoutX="572.0" style="-fx-background-color: #fd64;" text="F. Pago" />
+                                    <MFXTableColumn fx:id="fechaVencimientoClienteCol" layoutX="672.0" style="-fx-background-color: #2d4f;" text="F. Vencimiento" />
+                                    <MFXTableColumn fx:id="estatusClienteCol" layoutX="778.0" minWidth="79.0" prefHeight="18.0" prefWidth="79.0" style="-fx-background-color: #fd64;" text="Estatus" />
                                  </children>
                               </AnchorPane>
                               <Separator layoutX="14.0" layoutY="227.0" prefHeight="0.0" prefWidth="856.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="595.0" layoutY="13.0" prefHeight="523.0" prefWidth="275.0" style="-fx-background-color: #198b;">
                                  <children>
