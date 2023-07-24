@@ -4,9 +4,14 @@ import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 import java.sql.Connection;
@@ -93,6 +98,19 @@ public class AppController {
                     alerta.setHeaderText(null);
                     alerta.setContentText("Inicio de sesion exitosa");
                     alerta.showAndWait();
+
+                    si_loginBtn.getScene().getWindow().hide();
+
+                    Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+
+                    Stage stage = new Stage();
+                    Scene scene = new Scene(root);
+
+                    stage.initStyle(StageStyle.TRANSPARENT);
+
+                    stage.setScene(scene);
+                    stage.show();
+
                 }else{
                     alerta = new Alert(Alert.AlertType.ERROR);
                     alerta.setTitle("Error inesperado");
