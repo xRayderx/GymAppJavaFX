@@ -19,6 +19,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -262,6 +266,41 @@ public class dashboardController {
     @FXML
     private Label totalPagoLbl;
 
+    private PreparedStatement prepare;
+    private Connection conexion;
+    private ResultSet resultado;
+    private Statement statement;
+
+    public ObservableList<instructoresDatos> instructoresDatosLista(){
+        ObservableList<instructoresDatos> instDatos = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM instructores";
+        conexion = conexionBdd.conexion();
+
+        try{
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            instructoresDatos id;
+
+            while(resultado.next()){
+                id = new instructoresDatos(resultado.getString("id_instructor"), resultado.getString("nombres"),
+                        resultado.getString("apellidos"), resultado.getString("direccion"), resultado.getString("sexo"),
+                        resultado.getString("telefono_movil"), resultado.getString("telefono_casa"), resultado.getString("estatus"));
+                instDatos.add(id);
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return instDatos;
+    }
+
+    private ObservableList<instructoresDatos> instructoresListaDatos;
+    public void instructoresMostrarDatos(){
+        instructoresListaDatos = instructoresDatosLista();
+    }
+
     private String sexo[] = {"Masculino", "Femenino", "Otro"};
     public void instructorSexoLista(){
         List<String> sexoLista = new ArrayList<>();
@@ -272,7 +311,21 @@ public class dashboardController {
 
         ObservableList listData = FXCollections.observableArrayList(sexoLista);
         sexoInstructorAddCombo.setItems(listData);
+        sexoClienteAddCombo.setItems(listData);
 
+    }
+
+    private String status[] = {"Activo", "Inactivo"};
+
+    public void estatusCliente(){
+        List<String> estatusLista = new ArrayList<>();
+
+        for (String data: status){
+            estatusLista.add(data);
+        }
+
+        ObservableList stList = FXCollections.observableArrayList(estatusLista);
+        estatusClienteAddCombo.setItems(stList);
     }
 
     public void cambiarForm(ActionEvent event) {
@@ -303,15 +356,16 @@ public class dashboardController {
 
         } else if (event.getSource() == mainMiembrosBtn) {
 
+
             mainStatForm.setVisible(false);
             mainInstructorForm.setVisible(false);
             clienteForm.setVisible(true);
             pagoForm.setVisible(false);
 
             //membersShowData();
-            //membersGender();
+            instructorSexoLista();
             //membersSchedule();
-            //membersStatus();
+            estatusCliente();
 
         } else if (event.getSource() == mainPagosBtn) {
 

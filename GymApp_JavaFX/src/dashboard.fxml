@@ -93,7 +93,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #;" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="mainStatForm" layoutX="7.0" layoutY="6.0" prefHeight="555.0" prefWidth="881.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainStatForm" layoutX="7.0" layoutY="6.0" prefHeight="555.0" prefWidth="881.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Separator layoutY="163.0" prefHeight="9.0" prefWidth="868.0" />
                               <AnchorPane layoutY="1.0" prefHeight="152.0" prefWidth="867.0" style="-fx-background-color: #2314;">
@@ -163,7 +163,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="275.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
                                  <children>
@@ -185,7 +185,7 @@
                                        </font>
                                     </Label>
                                     <MFXTextField fx:id="direccionInstructorAddField" layoutX="85.0" layoutY="159.0" prefHeight="61.0" prefWidth="170.0" />
-                                    <MFXComboBox fx:id="sexoInstructorAddCombo" layoutX="84.0" layoutY="231.0" prefHeight="35.0" prefWidth="170.0" promptText="Elige...">
+                                    <MFXComboBox fx:id="sexoInstructorAddCombo" layoutX="84.0" layoutY="231.0" onAction="#instructorSexoLista" prefHeight="35.0" prefWidth="170.0" promptText="Elige...">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
