@@ -15,12 +15,12 @@
          <children>
             <MFXTextField fx:id="si_usuario" floatingText="Ingrese usuario..." layoutX="22.0" layoutY="155.0" onAction="#login" prefHeight="28.0" prefWidth="254.0" />
             <MFXPasswordField fx:id="si_pass" floatingText="Ingrese contraseña..." layoutX="22.0" layoutY="225.0" onAction="#login" prefHeight="50.0" prefWidth="254.0" />
-            <MFXButton fx:id="si_loginBtn" buttonType="RAISED" layoutX="22.0" layoutY="294.0" onAction="#login" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: linear-gradient(to top right, #2c2c57, #392b78); -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Entrar" textFill="WHITE">
+            <MFXButton fx:id="si_loginBtn" buttonType="RAISED" layoutX="22.0" layoutY="294.0" onAction="#login" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: #0d121a; -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Entrar" textFill="WHITE">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
             </MFXButton>
-            <Label alignment="CENTER" layoutX="24.0" layoutY="95.0" prefHeight="50.0" prefWidth="254.0" text="Iniciar Sesión" textFill="#392b78">
+            <Label alignment="CENTER" layoutX="24.0" layoutY="95.0" prefHeight="50.0" prefWidth="254.0" text="Iniciar Sesión" textFill="#00459d">
                <font>
                   <Font size="36.0" />
                </font>
@@ -32,7 +32,7 @@
             </MFXButton>
             <ImageView fitHeight="73.0" fitWidth="105.0" layoutX="99.0" layoutY="14.0" pickOnBounds="true">
                <image>
-                  <Image url="@assets/userPurple.png" />
+                  <Image url="@assets/loginLogo.png" />
                </image>
             </ImageView>
          </children>
@@ -42,25 +42,20 @@
             <MFXTextField fx:id="re_correo" floatingText="Ingrese correo..." layoutX="22.0" layoutY="85.0" onAction="#registro" prefHeight="28.0" prefWidth="254.0" />
             <MFXTextField fx:id="re_usuario" floatingText="Ingrese usuario..." layoutX="22.0" layoutY="155.0" onAction="#registro" prefHeight="28.0" prefWidth="254.0" />
             <MFXPasswordField fx:id="re_clave" floatingText="Ingrese contraseña..." layoutX="22.0" layoutY="225.0" onAction="#registro" prefHeight="50.0" prefWidth="254.0" />
-            <MFXButton fx:id="re_registrar" buttonType="RAISED" layoutX="22.0" layoutY="294.0" onAction="#registro" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: linear-gradient(to top right, #2c2c57, #392b78); -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Registrarse" textFill="WHITE">
+            <MFXButton fx:id="re_registrar" buttonType="RAISED" layoutX="22.0" layoutY="294.0" onAction="#registro" prefHeight="50.0" prefWidth="254.0" rippleColor="#3f2ba4" style="-fx-background-color: #0d121a; -fx-cursor: hand; -fx-text-fill: #FFFFFF;" styleClass=".loginBtn:hover linear-gradient(to top right, #404082, #3f2ba4)" text="Registrarse" textFill="WHITE">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
             </MFXButton>
-            <Label alignment="CENTER" layoutX="23.0" prefHeight="91.0" prefWidth="254.0" text="Regístrate" textFill="#392b78">
+            <Label alignment="CENTER" layoutX="23.0" prefHeight="91.0" prefWidth="254.0" text="Regístrate" textFill="#00459d">
                <font>
                   <Font size="36.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="la_left" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: linear-gradient(to bottom right, #2c2c57, #392b78); -fx-border-color: #000000; -fx-border-width: .4px;">
+      <AnchorPane fx:id="la_left" prefHeight="400.0" prefWidth="302.0" style="-fx-background-color: #0d121a; -fx-border-color: #000000; -fx-border-width: .4px;">
          <children>
-            <Label alignment="CENTER" layoutX="11.0" layoutY="156.0" prefHeight="91.0" prefWidth="280.0" text="Administración Gimnasio" textFill="WHITE">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Label>
             <Label fx:id="la_registroLabel" alignment="CENTER" layoutX="70.0" layoutY="266.0" prefHeight="18.0" prefWidth="162.0" text="Crear una nueva cuenta" textFill="WHITE">
                <font>
                   <Font name="Arial" size="14.0" />
@@ -76,9 +71,9 @@
                   <Font size="14.0" />
                </font>
             </MFXButton>
-            <ImageView fitHeight="183.0" fitWidth="236.0" layoutX="31.0" layoutY="-1.0" pickOnBounds="true">
+            <ImageView fitHeight="264.0" fitWidth="276.0" layoutX="13.0" layoutY="-1.0" pickOnBounds="true">
                <image>
-                  <Image url="@assets/dumbell1.png" />
+                  <Image url="@assets/gymAppLogo.png" />
                </image>
             </ImageView>
          </children>
