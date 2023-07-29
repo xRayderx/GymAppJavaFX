@@ -27,6 +27,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -313,6 +314,75 @@ public class dashboardController {
     private Connection conexion;
     private ResultSet resultado;
     private Statement statement;
+
+    public void numeroClientes(){
+        String sql = "SELECT COUNT(cedula_cliente) AS total_clientes FROM public.clientes WHERE estatus='Activo'";
+
+        conexion = conexionBdd.conexion();
+
+        int nc = 0 ;
+
+        try{
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            if(resultado.next()){
+                nc = resultado.getInt("total_clientes");
+
+            }
+            totalMiembrosLabel.setText(String.valueOf(nc));
+            cerrarConexion();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
+    }
+
+    public void totalInstructores(){
+        String sql = "SELECT COUNT(id_instructor) AS total_instructor from public.instructores WHERE estatus='Activo'";
+
+        conexion = conexionBdd.conexion();
+
+        int ti = 0;
+        try{
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            if(resultado.next()){
+                ti = resultado.getInt("total_instructor");
+            }
+            totalInstructoresLabel.setText(String.valueOf(ti));
+            cerrarConexion();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void totalIngresoMensual(){
+        String sql = "SELECT SUM(monto) AS total_monto FROM public.pagos WHERE EXTRACT(MONTH FROM fecha_inicio_pago) = EXTRACT(MONTH FROM CURRENT_DATE)";
+
+        conexion = conexionBdd.conexion();
+
+        double tm = 0;
+        try {
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            if (resultado.next()) {
+                tm = resultado.getDouble("total_monto");
+            }
+            DecimalFormat df = new DecimalFormat("#.00");
+            String tmFormatted = df.format(tm);
+            totalIngresosLabel.setText(tmFormatted + "$");
+            cerrarConexion();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    public void mostrarEstadisticas(){
+
+    }
     private String prefijosFijo[] = {"0243", "0244", "0246"};
     public void prefijosFijoLista(){
         List<String> prefLista = new ArrayList<>();
@@ -834,9 +904,9 @@ public class dashboardController {
             clienteForm.setVisible(false);
             pagoForm.setVisible(false);
 
-            //dashboardNM();
-            //dashboardTC();
-            //dashboardTI();
+            numeroClientes();
+            totalInstructores();
+            totalIngresoMensual();
             //dashboardChart();
 
         } else if (event.getSource() == mainInstructorBtn) {
