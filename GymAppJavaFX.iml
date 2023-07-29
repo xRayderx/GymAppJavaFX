@@ -19,5 +19,6 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="json" level="project" />
+    <orderEntry type="library" name="guicedee.services.jfreechart" level="project" />
   </component>
 </module>

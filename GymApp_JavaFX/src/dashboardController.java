@@ -13,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -165,7 +166,7 @@ public class dashboardController {
     private TableColumn<pagosDatos, Integer> idPago;
 
     @FXML
-    private AreaChart<?, ?> ingresoMensualChart;
+    private AreaChart<String, Number> ingresoMensualChart;
 
     @FXML
     private MFXButton limpiarCamposClienteBtn;
@@ -381,7 +382,41 @@ public class dashboardController {
     }
 
     public void mostrarEstadisticas(){
+        ingresoMensualChart.getData().clear();
 
+        String sql = "SELECT EXTRACT(YEAR FROM fecha_vencimiento) AS anio,\n" +
+                "       EXTRACT(MONTH FROM fecha_vencimiento) AS mes,\n" +
+                "       SUM(monto) AS monto_total\n" +
+                "FROM public.pagos\n" +
+                "WHERE fecha_vencimiento >= CURRENT_DATE\n" +
+                "GROUP BY EXTRACT(YEAR FROM fecha_vencimiento), EXTRACT(MONTH FROM fecha_vencimiento)\n" +
+                "ORDER BY EXTRACT(YEAR FROM fecha_vencimiento), EXTRACT(MONTH FROM fecha_vencimiento) ASC\n" +
+                "LIMIT 10;";
+
+        conexion = conexionBdd.conexion();
+
+        XYChart.Series<String, Number> estadisticas = new XYChart.Series<>();
+
+        try {
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            while (resultado.next()) {
+                String mes = resultado.getString(2); // Obtener el mes como una cadena
+                double montoTotal = resultado.getDouble(3); // Obtener el monto total
+
+                System.out.println("Mes: " + mes + ", Monto Total: " + montoTotal);
+
+                estadisticas.getData().add(new XYChart.Data<>(mes, montoTotal)); // Agregar los datos a la serie
+            }
+
+            estadisticas.setName("X: Meses, Y: Cantidades");
+
+            ingresoMensualChart.getData().add(estadisticas); // Agregar la serie al gráfico
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
     private String prefijosFijo[] = {"0243", "0244", "0246"};
     public void prefijosFijoLista(){
@@ -907,7 +942,7 @@ public class dashboardController {
             numeroClientes();
             totalInstructores();
             totalIngresoMensual();
-            //dashboardChart();
+            mostrarEstadisticas();
 
         } else if (event.getSource() == mainInstructorBtn) {
 
