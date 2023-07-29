@@ -913,7 +913,7 @@ public class dashboardController {
                     alert.setContentText("Pago registrado exitosamente!");
                     alert.showAndWait();
                     mostrarPagosDatos();
-                    //pagosLimpiarCampos();
+                    pagosLimpiarCampos();
                 }else {
                     alert= new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Mensaje de informacion");
@@ -927,6 +927,20 @@ public class dashboardController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+    }
+    public void pagosLimpiarCampos(){
+        pagoCedulaLetra.getSelectionModel().selectFirst();
+        pagoCedulaCampo.setText("");
+        pagoDiaBtn.setSelected(false);
+        pagoMesBtn.setSelected(false);
+        pagoSemanaBtn.setSelected(false);
+        pagoMesCombo.getSelectionModel().clearSelection();
+        pagoMetodoCombo.getSelectionModel().clearSelection();
+        montoPagoBtn.setText("");
+    }
+
+    public void pagosEliminarPago(){
 
     }
 
@@ -981,7 +995,6 @@ public class dashboardController {
             mostrarPagosDatos();
             mesesLista();
             metodoPago();
-            //paymentName();
 
         }
 

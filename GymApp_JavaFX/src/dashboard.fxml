@@ -97,7 +97,7 @@
                <center>
                   <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #;" BorderPane.alignment="CENTER">
                      <children>
-                        <AnchorPane fx:id="mainStatForm" layoutX="7.0" layoutY="6.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainStatForm" layoutX="7.0" layoutY="6.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Separator layoutY="163.0" prefHeight="9.0" prefWidth="868.0" />
                               <AnchorPane layoutY="1.0" prefHeight="152.0" prefWidth="867.0" style="-fx-background-color: #2a3548; -fx-border-color: #e6f1ff; -fx-border-width: 0px 0px 0px 2px;">
@@ -372,7 +372,7 @@
                               <Separator layoutX="14.0" layoutY="227.0" prefHeight="0.0" prefWidth="856.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="595.0" layoutY="13.0" prefHeight="523.0" prefWidth="275.0" style="-fx-background-color: #e6f1ff;">
                                  <children>
@@ -398,6 +398,8 @@
                                     <MFXComboBox fx:id="pagoMetodoCombo" layoutX="111.0" layoutY="183.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="130.0" promptText="Seleccione..." style="-fx-border-color: #0d121a;" />
                                     <Label layoutX="27.0" layoutY="192.0" text="Método Pago:" />
                                     <Group />
+                                    <MFXButton fx:id="limpiarPagoBtn" layoutX="55.0" layoutY="450.0" onAction="#pagosLimpiarCampos" prefHeight="50.0" prefWidth="75.0" style="-fx-border-color: #0d121a;" text="Limpiar" />
+                                    <MFXButton fx:id="eliminarPagoBtn" layoutX="143.0" layoutY="450.0" onAction="#pagosEliminarPago" prefHeight="50.0" prefWidth="75.0" style="-fx-border-color: #0d121a;" text="Eliminar" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="250.0" prefWidth="565.0" style="-fx-background-color: #198b;">
