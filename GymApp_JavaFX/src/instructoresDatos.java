@@ -1,25 +1,24 @@
 public class instructoresDatos {
-
-    private String idInstructor;
+    private String id_instructor;
     private String nombres;
     private String apellidos;
     private String direccion;
     private String sexo;
-    private String tlfMovilCliente;
-    private String tlfCasaCliente;
+    private String telefono_movil;
+    private String telefono_casa;
     private String estatus;
-    public instructoresDatos(String idInstructor, String nombres, String apellidos, String direccion, String sexo, String tlfMovilCliente, String tlfCasaCliente, String estatus) {
-        this.idInstructor = idInstructor;
+    public instructoresDatos(String idInstructor, String nombres, String apellidos, String direccion, String sexo, String telefono_movil, String telefono_casa, String estatus) {
+        this.id_instructor = idInstructor;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.direccion = direccion;
         this.sexo = sexo;
-        this.tlfMovilCliente = tlfMovilCliente;
-        this.tlfCasaCliente = tlfCasaCliente;
+        this.telefono_movil = telefono_movil;
+        this.telefono_casa = telefono_casa;
         this.estatus = estatus;
     }
-    public String getIdInstructor(){
-        return idInstructor;
+    public String getId_instructor(){
+        return id_instructor;
     }
     public String getNombres(){
         return nombres;
@@ -33,11 +32,11 @@ public class instructoresDatos {
     public String getSexo(){
         return sexo;
     }
-    public String getTlfMovilCliente(){
-        return tlfMovilCliente;
+    public String getTelefono_movil(){
+        return telefono_movil;
     }
-    public String getTlfCasaCliente(){
-        return tlfCasaCliente;
+    public String getTelefono_casa(){
+        return telefono_casa;
     }
     public String getEstatus(){
         return estatus;

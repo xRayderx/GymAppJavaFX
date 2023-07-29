@@ -5,7 +5,6 @@
 <?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTableColumn?>
-<?import io.github.palexdev.materialfx.controls.MFXTableView?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
 <?import javafx.scene.chart.AreaChart?>
@@ -14,6 +13,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
@@ -225,35 +225,56 @@
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <MFXButton fx:id="addInstructorBtn" buttonType="RAISED" layoutX="18.0" layoutY="409.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Añadir">
+                                    <MFXButton fx:id="addInstructorBtn" buttonType="RAISED" layoutX="19.0" layoutY="427.0" onAction="#instructoresNuevoBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Añadir">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXButton fx:id="editInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="409.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Actualizar">
+                                    <MFXButton fx:id="editInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="427.0" onAction="#instructoresActualizarBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Actualizar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXButton fx:id="cleanInstructorFieldBtn" buttonType="RAISED" layoutX="18.0" layoutY="458.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Limpiar">
+                                    <MFXButton fx:id="cleanInstructorFieldBtn" buttonType="RAISED" layoutX="19.0" layoutY="476.0" onAction="#instructoresLimpiarDatos" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Limpiar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXButton fx:id="deleteInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="458.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Eliminar">
+                                    <MFXButton fx:id="deleteInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="476.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Eliminar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXTextField fx:id="nombreInstructorAddField1" layoutX="85.0" layoutY="113.0" minHeight="25.0" minWidth="80.0" prefHeight="35.0" prefWidth="170.0" />
+                                    <MFXTextField fx:id="apellidosInstructorAddField" layoutX="85.0" layoutY="113.0" minHeight="25.0" minWidth="80.0" prefHeight="35.0" prefWidth="170.0" />
                                     <Label layoutX="14.0" layoutY="123.0" style="-fx-text-fill: #e6f1ff;" text="Apellidos:">
                                        <font>
                                           <Font name="Arial Bold" size="14.0" />
                                        </font>
                                     </Label>
-                                    <MFXComboBox layoutX="82.0" layoutY="286.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="60.0" />
-                                    <MFXComboBox layoutX="82.0" layoutY="329.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="60.0" />
+                                    <MFXComboBox fx:id="movilPrefijoInstCombo" layoutX="82.0" layoutY="286.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="60.0" />
+                                    <MFXComboBox fx:id="casaPrefijoInstCombo" layoutX="82.0" layoutY="329.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="60.0" />
+                                    <MFXComboBox fx:id="estatusInstructorAddCombo" layoutX="84.0" layoutY="375.0" prefHeight="35.0" prefWidth="170.0" promptText="Elige...">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </MFXComboBox>
+                                    <Label layoutX="21.0" layoutY="385.0" style="-fx-text-fill: #e6f1ff;" text="Estatus">
+                                       <font>
+                                          <Font name="Arial Bold" size="13.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="321.0" layoutY="14.0" prefHeight="527.0" prefWidth="547.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
                                  <children>
-                                    <MFXTableView fx:id="tablaInstructorTable" layoutX="14.0" layoutY="14.0" prefHeight="500.0" prefWidth="520.0" />
+                                    <TableView fx:id="instructoresTablaVista" layoutX="14.0" layoutY="15.0" onMouseClicked="#instructoresSeleccion" prefHeight="498.0" prefWidth="519.0">
+                                      <columns>
+                                        <TableColumn fx:id="cedula_inst_col" prefWidth="75.0" text="Cedula" />
+                                        <TableColumn fx:id="nombre_inst_col" prefWidth="75.0" text="Nombres" />
+                                          <TableColumn fx:id="apellidos_inst_col" prefWidth="75.0" text="Apellidos" />
+                                          <TableColumn fx:id="direccion_inst_col" prefWidth="75.0" text="Direccion" />
+                                          <TableColumn fx:id="sexo_inst_col" prefWidth="52.0" text="Sexo" />
+                                          <TableColumn fx:id="movil_inst_col" prefWidth="55.0" text="Movil" />
+                                          <TableColumn fx:id="casa_inst_col" prefWidth="61.0" text="Casa" />
+                                          <TableColumn fx:id="estatus_inst_col" prefWidth="61.0" text="Estatus" />
+                                      </columns>
+                                    </TableView>
                                  </children>
                               </AnchorPane>
                               <Separator layoutX="302.0" layoutY="14.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="9.0" />

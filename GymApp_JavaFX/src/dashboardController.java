@@ -3,7 +3,6 @@ import io.github.palexdev.materialfx.controls.MFXComboBox;
 import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
-import io.github.palexdev.materialfx.controls.MFXTableView;
 import io.github.palexdev.materialfx.controls.MFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,15 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +39,9 @@ public class dashboardController {
     private MFXTableColumn<?> apellidoTablaClienteCol;
 
     @FXML
+    private TableColumn<instructoresDatos, String> apellidos_inst_col;
+
+    @FXML
     private MFXButton bcvCheckBtn;
 
     @FXML
@@ -49,6 +49,9 @@ public class dashboardController {
 
     @FXML
     private TableColumn<?, ?> bcvTasaColPago;
+
+    @FXML
+    private TableColumn<instructoresDatos, String> casa_inst_col;
 
     @FXML
     private TableColumn<?, ?> cedulaClienteColPago;
@@ -67,6 +70,9 @@ public class dashboardController {
 
     @FXML
     private MFXTableColumn<?> cedulaTablaClienteCol;
+
+    @FXML
+    private TableColumn<instructoresDatos, String> cedula_inst_col;
 
     @FXML
     private MFXButton cleanInstructorFieldBtn;
@@ -96,7 +102,13 @@ public class dashboardController {
     private MFXTableColumn<?> direccionTablaClienteCol;
 
     @FXML
+    private TableColumn<instructoresDatos, String> direccion_inst_col;
+
+    @FXML
     private MFXButton editClienteBtn;
+
+    @FXML
+    private TableView<instructoresDatos> instructoresTablaVista;
 
     @FXML
     private MFXButton editInstructorBtn;
@@ -109,6 +121,12 @@ public class dashboardController {
 
     @FXML
     private TableColumn<?, ?> estatusClienteColPago;
+
+    @FXML
+    private MFXComboBox<?> estatusInstructorAddCombo;
+
+    @FXML
+    private TableColumn<instructoresDatos, String> estatus_inst_col;
 
     @FXML
     private TableColumn<?, ?> fechaClienteInicioColPago;
@@ -180,6 +198,9 @@ public class dashboardController {
     private MFXTextField montoPagoBtn;
 
     @FXML
+    private TableColumn<instructoresDatos, String> movil_inst_col;
+
+    @FXML
     private MFXTextField nombreClienteAddField;
 
     @FXML
@@ -189,10 +210,13 @@ public class dashboardController {
     private MFXTextField nombreInstructorAddField;
 
     @FXML
-    private MFXTextField nombreInstructorAddField1;
+    private MFXTextField apellidosInstructorAddField;
 
     @FXML
     private MFXTableColumn<?> nombreTablaClienteCol;
+
+    @FXML
+    private TableColumn<instructoresDatos, String> nombre_inst_col;
 
     @FXML
     private MFXButton nuevoClienteAddBtn;
@@ -237,7 +261,7 @@ public class dashboardController {
     private MFXTableColumn<?> sexoTablaClienteCol;
 
     @FXML
-    private MFXTableView<?> tablaInstructorTable;
+    private TableColumn<instructoresDatos, String> sexo_inst_col;
 
     @FXML
     private MFXTextField telefonoCasaInstructorAddField;
@@ -266,10 +290,145 @@ public class dashboardController {
     @FXML
     private Label totalPagoLbl;
 
+    @FXML
+    private MFXComboBox<?> casaPrefijoInstCombo;
+    @FXML
+    private MFXComboBox<?> movilPrefijoInstCombo;
+
     private PreparedStatement prepare;
     private Connection conexion;
     private ResultSet resultado;
     private Statement statement;
+    private String prefijosFijo[] = {"0243", "0244", "0246"};
+    public void prefijosFijoLista(){
+        List<String> prefLista = new ArrayList<>();
+
+        for(String data: prefijosFijo){
+            prefLista.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(prefLista);
+        casaPrefijoInstCombo.setItems(listData);
+    }
+
+    private String prefijosMovil[] = {"0412", "0414", "0424", "0416", "0426"};
+    public void prefijosMovilLista(){
+        List<String> prefLista = new ArrayList<>();
+
+        for(String data: prefijosMovil){
+            prefLista.add(data);
+        }
+
+        ObservableList listData = FXCollections.observableArrayList(prefLista);
+        movilPrefijoInstCombo.setItems(listData);
+    }
+
+    public void camposVacios(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Faltan campos");
+        alert.setHeaderText(null);
+        alert.setContentText("Faltan campos, porfavor llena todos los campos");
+        alert.showAndWait();
+    }
+
+    public void instructoresNuevoBoton(){
+        String sql = "INSERT INTO public.instructores(\n" +
+                "\tid_instructor, nombres, apellidos, direccion, sexo, telefono_movil, telefono_casa, estatus)\n" +
+                "\tVALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+        conexion = conexionBdd.conexion();
+
+        try {
+            Alert alert;
+
+            if (cedulaInstructorAddField.getText().isEmpty() || nombreInstructorAddField.getText().isEmpty() || apellidosInstructorAddField.getText().isEmpty()
+                    || direccionInstructorAddField.getText().isEmpty() || sexoInstructorAddCombo.getSelectionModel().getSelectedItem() == null
+                    || movilPrefijoInstCombo.getSelectionModel().getSelectedItem() == null || telefonoMovilInstructorAddField.getText().isEmpty()
+                    || casaPrefijoInstCombo.getSelectionModel().getSelectedItem() == null || telefonoCasaInstructorAddField.getText().isEmpty()
+                    || estatusInstructorAddCombo.getSelectionModel().getSelectedItem() == null){camposVacios();}else{
+                String revisarDatos = "SELECT id_instructor from instructores WHERE id_instructor = '"+cedulaInstructorAddField.getText()+"'";
+
+                statement = conexion.createStatement();
+                resultado = statement.executeQuery(revisarDatos);
+
+                if (resultado.next()){
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Faltan campos");
+                    alert.setHeaderText(null);
+                    alert.setContentText("El numero de cedula: " + cedulaInstructorAddField.getText() + "Ya esta registrado");
+                    alert.showAndWait();
+                }else{
+                    prepare = conexion.prepareStatement(sql);
+                    prepare.setString(1, cedulaInstructorAddField.getText());
+                    prepare.setString(2, nombreInstructorAddField.getText());
+                    prepare.setString(3, apellidosInstructorAddField.getText());
+                    prepare.setString(4, direccionInstructorAddField.getText());
+                    prepare.setString(5, sexoInstructorAddCombo.getText());
+                    prepare.setString(6, (String)movilPrefijoInstCombo.getSelectionModel().getSelectedItem()+telefonoMovilInstructorAddField.getText());
+                    prepare.setString(7, (String)casaPrefijoInstCombo.getSelectionModel().getSelectedItem()+telefonoCasaInstructorAddField.getText());
+                    prepare.setString(8, (String)estatusInstructorAddCombo.getSelectionModel().getSelectedItem());
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Registro exitoso");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Instructor registrado exitosamente");
+                    alert.showAndWait();
+
+                    //Para ingresar los datos y mostrarlos denuevo en la tabla
+                    prepare.executeUpdate();
+                    instructoresMostrarDatos();
+                    //Limpiar datos cuando se ingrese el nuevo instructor
+                    instructoresLimpiarDatos();
+
+                }
+
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void instructoresActualizarBoton(){
+        String sql = "UPDATE public.instructores "
+                + "SET id_instructor = '" + cedulaInstructorAddField.getText() + "', "
+                + "nombres = '" + nombreInstructorAddField.getText() + "', "
+                + "apellidos = '" + apellidosInstructorAddField.getText() + "', "
+                + "direccion = '" + direccionInstructorAddField.getText() + "', "
+                + "sexo = '" + sexoInstructorAddCombo.getText() + "', "
+                + "telefono_movil = '" + (String) movilPrefijoInstCombo.getSelectionModel().getSelectedItem()
+                + telefonoMovilInstructorAddField.getText() + "', "
+                + "telefono_casa = '" + (String) casaPrefijoInstCombo.getSelectionModel().getSelectedItem()
+                + telefonoCasaInstructorAddField.getText() + "', "
+                + "estatus = '" + (String) estatusInstructorAddCombo.getSelectionModel().getSelectedItem() + "' WHERE id_instructor = '"
+                + cedulaInstructorAddField.getText()+"' ";
+
+        Alert alert;
+        conexion = conexionBdd.conexion();
+
+        try{
+            if (cedulaInstructorAddField.getText().isEmpty() || nombreInstructorAddField.getText().isEmpty() || apellidosInstructorAddField.getText().isEmpty()
+                    || direccionInstructorAddField.getText().isEmpty() || sexoInstructorAddCombo.getSelectionModel().getSelectedItem() == null
+                    || movilPrefijoInstCombo.getSelectionModel().getSelectedItem() == null || telefonoMovilInstructorAddField.getText().isEmpty()
+                    || casaPrefijoInstCombo.getSelectionModel().getSelectedItem() == null || telefonoCasaInstructorAddField.getText().isEmpty()
+                    || estatusInstructorAddCombo.getSelectionModel().getSelectedItem() == null){camposVacios();}else{
+
+                prepare = conexion.prepareStatement(sql);
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Registro actualizado");
+                alert.setHeaderText(null);
+                alert.setContentText("Registro del instructor cedula: " + cedulaInstructorAddField.getText() + " actualizado!");
+                alert.showAndWait();
+                prepare.executeUpdate();
+
+                instructoresMostrarDatos();
+
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
 
     public ObservableList<instructoresDatos> instructoresDatosLista(){
         ObservableList<instructoresDatos> instDatos = FXCollections.observableArrayList();
@@ -299,6 +458,49 @@ public class dashboardController {
     private ObservableList<instructoresDatos> instructoresListaDatos;
     public void instructoresMostrarDatos(){
         instructoresListaDatos = instructoresDatosLista();
+
+        cedula_inst_col.setCellValueFactory(new PropertyValueFactory<>("id_instructor"));
+        nombre_inst_col.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        apellidos_inst_col.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        direccion_inst_col.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        sexo_inst_col.setCellValueFactory(new PropertyValueFactory<>("sexo"));
+        movil_inst_col.setCellValueFactory(new PropertyValueFactory<>("telefono_movil"));
+        casa_inst_col.setCellValueFactory(new PropertyValueFactory<>("telefono_casa"));
+        estatus_inst_col.setCellValueFactory(new PropertyValueFactory<>("estatus"));
+
+        instructoresTablaVista.setItems(instructoresListaDatos);
+
+    }
+    public void instructoresLimpiarDatos(){
+        cedulaInstructorAddField.setText("");
+        nombreInstructorAddField.setText("");
+        apellidosInstructorAddField.setText("");
+        direccionInstructorAddField.setText("");
+        sexoInstructorAddCombo.getSelectionModel().clearSelection();
+        telefonoMovilInstructorAddField.setText("");
+        movilPrefijoInstCombo.getSelectionModel().clearSelection();
+        telefonoCasaInstructorAddField.setText("");
+        casaPrefijoInstCombo.getSelectionModel().clearSelection();
+        estatusInstructorAddCombo.getSelectionModel().clearSelection();
+    }
+
+    public void instructoresSeleccion(){
+        instructoresDatos id = instructoresTablaVista.getSelectionModel().getSelectedItem();
+        int num = instructoresTablaVista.getSelectionModel().getSelectedIndex();
+
+        if ((num - 1) < -1 ) return;
+
+        cedulaInstructorAddField.setText(id.getId_instructor());
+        nombreInstructorAddField.setText(id.getNombres());
+        apellidosInstructorAddField.setText(id.getApellidos());
+        direccionInstructorAddField.setText(id.getDireccion());
+        sexoInstructorAddCombo.setText(id.getSexo());
+        telefonoMovilInstructorAddField.setText(id.getTelefono_movil());
+        //movilPrefijoInstCombo.getText();
+        telefonoCasaInstructorAddField.setText(id.getTelefono_casa());
+        //casaPrefijoInstCombo.getText();
+        estatusInstructorAddCombo.setText(id.getEstatus());
+
     }
 
     private String sexo[] = {"Masculino", "Femenino", "Otro"};
@@ -326,6 +528,7 @@ public class dashboardController {
 
         ObservableList stList = FXCollections.observableArrayList(estatusLista);
         estatusClienteAddCombo.setItems(stList);
+        estatusInstructorAddCombo.setItems(stList);
     }
 
     public void cambiarForm(ActionEvent event) {
@@ -351,8 +554,10 @@ public class dashboardController {
 
             // TO UPDATE WHEN YOU CLICK THE MENU BUTTON LIKE COACHES BUTTON
             instructorSexoLista();
-            //coachStatusList();
-            //coachesShowData();
+            prefijosMovilLista();
+            prefijosFijoLista();
+            estatusCliente();
+            instructoresMostrarDatos();
 
         } else if (event.getSource() == mainMiembrosBtn) {
 

@@ -9,8 +9,8 @@ public class conexionBdd {
         try {
             Class.forName("org.postgresql.Driver");
             String dbname = "proyectodb";
-            String user = "postgres";
-            String pass = "admin";
+            String user = "java";
+            String pass = "java";
             conexion = DriverManager.getConnection("jdbc:postgresql://localhost:5432/" + dbname, user, pass);
             if (conexion != null) {
                 System.out.println("Conexion a la base de datos establecida");
