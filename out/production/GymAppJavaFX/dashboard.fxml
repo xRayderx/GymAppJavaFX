@@ -181,7 +181,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="275.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
                                  <children>
@@ -237,7 +237,7 @@
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
-                                    <MFXButton fx:id="deleteInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="476.0" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Eliminar">
+                                    <MFXButton fx:id="deleteInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="476.0" onAction="#instructoresEliminarBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-background-color: transparent; -fx-border-color: #e6f1ff; -fx-text-fill: #e6f1ff;" text="Eliminar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
                                        </font></MFXButton>
@@ -371,7 +371,7 @@
                               <Separator layoutX="14.0" layoutY="227.0" prefHeight="0.0" prefWidth="856.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="595.0" layoutY="13.0" prefHeight="523.0" prefWidth="275.0" style="-fx-background-color: #e6f1ff;">
                                  <children>
@@ -415,7 +415,7 @@
                               </AnchorPane>
                               <AnchorPane layoutX="14.0" layoutY="287.0" prefHeight="250.0" prefWidth="565.0" style="-fx-background-color: #198b;">
                                  <children>
-                                    <MFXLegacyTableView layoutY="-103.0" prefHeight="250.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <MFXLegacyTableView fx:id="tablaPagosVista" layoutY="-103.0" prefHeight="250.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
                                           <TableColumn fx:id="idPago" prefWidth="75.0" text="ID Pago" />
                                           <TableColumn fx:id="cedulaColPago" prefWidth="75.0" text="Cedula Cliente" />

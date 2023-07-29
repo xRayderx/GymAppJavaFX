@@ -4,6 +4,7 @@ import io.github.palexdev.materialfx.controls.MFXDatePicker;
 import io.github.palexdev.materialfx.controls.MFXRadioButton;
 import io.github.palexdev.materialfx.controls.MFXTableColumn;
 import io.github.palexdev.materialfx.controls.MFXTextField;
+import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -48,7 +49,7 @@ public class dashboardController {
     private Label bcvCheckLbl;
 
     @FXML
-    private TableColumn<?, ?> bcvTasaColPago;
+    private TableColumn<pagosDatos, Double> bcvTasaColPago;
 
     @FXML
     private TableColumn<instructoresDatos, String> casa_inst_col;
@@ -60,7 +61,7 @@ public class dashboardController {
     private MFXTextField cedulaCodigoClienteAddField;
 
     @FXML
-    private TableColumn<?, ?> cedulaColPago;
+    private TableColumn<pagosDatos, String> cedulaColPago;
 
     @FXML
     private MFXTextField cedulaInstructorAddField;
@@ -138,7 +139,7 @@ public class dashboardController {
     private MFXDatePicker fechaInicioClienteAddDate;
 
     @FXML
-    private TableColumn<?, ?> fechaInicioColPago;
+    private TableColumn<pagosDatos, java.util.Date> fechaInicioColPago;
 
     @FXML
     private MFXTableColumn<?> fechaPagoClienteCol;
@@ -147,19 +148,22 @@ public class dashboardController {
     private MFXDatePicker fechaVencClienteAddDate;
 
     @FXML
-    private TableColumn<?, ?> fechaVencColPago;
+    private TableColumn<pagosDatos, java.util.Date> fechaVencColPago;
 
     @FXML
     private MFXTableColumn<?> fechaVencimientoClienteCol;
 
     @FXML
-    private TableColumn<?, ?> idPago;
+    private TableColumn<pagosDatos, Integer> idPago;
 
     @FXML
     private AreaChart<?, ?> ingresoMensualChart;
 
     @FXML
     private MFXButton limpiarCamposClienteBtn;
+
+    @FXML
+    private MFXLegacyTableView<pagosDatos> tablaPagosVista;
 
     @FXML
     private MFXButton mainDashboardBtn;
@@ -189,10 +193,10 @@ public class dashboardController {
     private AnchorPane mainStatForm;
 
     @FXML
-    private TableColumn<?, ?> metodoClienteColPago;
+    private TableColumn<pagosDatos, String> metodoClienteColPago;
 
     @FXML
-    private TableColumn<?, ?> montoColPago;
+    private TableColumn<pagosDatos, Double> montoColPago;
 
     @FXML
     private MFXTextField montoPagoBtn;
@@ -413,15 +417,80 @@ public class dashboardController {
                     || casaPrefijoInstCombo.getSelectionModel().getSelectedItem() == null || telefonoCasaInstructorAddField.getText().isEmpty()
                     || estatusInstructorAddCombo.getSelectionModel().getSelectedItem() == null){camposVacios();}else{
 
-                prepare = conexion.prepareStatement(sql);
-                alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Registro actualizado");
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Mensaje de confirmacion");
                 alert.setHeaderText(null);
-                alert.setContentText("Registro del instructor cedula: " + cedulaInstructorAddField.getText() + " actualizado!");
-                alert.showAndWait();
-                prepare.executeUpdate();
+                alert.setContentText("Estas seguro que deseas ACTUALIZAR los datos del instructor: " + cedulaInstructorAddField.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get().equals(ButtonType.OK)){
+                    prepare = conexion.prepareStatement(sql);
 
-                instructoresMostrarDatos();
+                    prepare.executeUpdate();
+
+                    alert = new Alert (Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro actualizado exitosamente!");
+                    alert.showAndWait();
+                    //actualizar datos
+                    instructoresMostrarDatos();
+                    //limpiar datos
+                    instructoresLimpiarDatos();
+                }else{
+                    alert= new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro cancelado!");
+                    alert.showAndWait();
+                }
+
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void instructoresEliminarBoton(){
+        String sql = "DELETE FROM instructores WHERE id_instructor = '"+cedulaInstructorAddField.getText()+"'";
+
+        Alert alert;
+        conexion = conexionBdd.conexion();
+
+        try{
+            if (cedulaInstructorAddField.getText().isEmpty() || nombreInstructorAddField.getText().isEmpty() || apellidosInstructorAddField.getText().isEmpty()
+                    || direccionInstructorAddField.getText().isEmpty() || sexoInstructorAddCombo.getSelectionModel().getSelectedItem() == null
+                    || movilPrefijoInstCombo.getSelectionModel().getSelectedItem() == null || telefonoMovilInstructorAddField.getText().isEmpty()
+                    || casaPrefijoInstCombo.getSelectionModel().getSelectedItem() == null || telefonoCasaInstructorAddField.getText().isEmpty()
+                    || estatusInstructorAddCombo.getSelectionModel().getSelectedItem() == null){camposVacios();}else{
+
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Mensaje de confirmacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Estas seguro que deseas ELIMINAR los datos del instructor: " + cedulaInstructorAddField.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get().equals(ButtonType.OK)){
+                    prepare = conexion.prepareStatement(sql);
+
+                    prepare.executeUpdate();
+
+                    alert = new Alert (Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro eliminado exitosamente!");
+                    alert.showAndWait();
+                    //actualizar datos
+                    instructoresMostrarDatos();
+                    //limpiar datos
+                    instructoresLimpiarDatos();
+                }else{
+                    alert= new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro cancelado!");
+                    alert.showAndWait();
+                }
 
             }
 
@@ -452,6 +521,7 @@ public class dashboardController {
         }catch(Exception e){
             System.out.println(e);
         }
+        cerrarConexion();
         return instDatos;
     }
 
@@ -531,6 +601,60 @@ public class dashboardController {
         estatusInstructorAddCombo.setItems(stList);
     }
 
+    public ObservableList<pagosDatos> obtenerPagosDatos (){
+        ObservableList<pagosDatos> pagosDatos = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM pagos";
+        conexion = conexionBdd.conexion();
+
+        try {
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            pagosDatos pago;
+
+            while (resultado.next()) {
+                int id_pago = resultado.getInt("id_pago");
+                String cedula_cliente = resultado.getString("cedula_cliente");
+                Date fecha_inicio_pago = resultado.getDate("fecha_inicio_pago");
+                Date fecha_vencimiento = resultado.getDate("fecha_vencimiento");
+                String metodo_pago = resultado.getString("metodo_pago");
+                double tasa_bcv = resultado.getDouble("tasa_bcv");
+                double monto = resultado.getDouble("monto");
+
+                pago = new pagosDatos(id_pago, cedula_cliente, fecha_inicio_pago, fecha_vencimiento, metodo_pago, tasa_bcv, monto);
+                pagosDatos.add(pago);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        } finally {
+            cerrarConexion();
+        }
+
+        return pagosDatos;
+    }
+    private ObservableList<pagosDatos> datosPagos;
+    public void mostrarPagosDatos() {
+        datosPagos = obtenerPagosDatos();
+
+        // Asignar los datos a las columnas de la tabla
+        idPago.setCellValueFactory(new PropertyValueFactory<>("id_pago"));
+        cedulaColPago.setCellValueFactory(new PropertyValueFactory<>("cedula_cliente"));
+        fechaInicioColPago.setCellValueFactory(new PropertyValueFactory<>("fecha_inicio_pago"));
+        fechaVencColPago.setCellValueFactory(new PropertyValueFactory<>("fecha_vencimiento"));
+        metodoClienteColPago.setCellValueFactory(new PropertyValueFactory<>("metodo_pago"));
+        bcvTasaColPago.setCellValueFactory(new PropertyValueFactory<>("tasa_bcv"));
+        montoColPago.setCellValueFactory(new PropertyValueFactory<>("monto"));
+
+        // Mostrar los datos en la tabla
+        tablaPagosVista.setItems(datosPagos);
+    }
+
+    public void nuevoPagoBtn(){
+
+    }
+
     public void cambiarForm(ActionEvent event) {
 
         if (event.getSource() == mainDashboardBtn) {
@@ -579,7 +703,7 @@ public class dashboardController {
             clienteForm.setVisible(false);
             pagoForm.setVisible(true);
 
-            //paymentShowData();
+            mostrarPagosDatos();
             //paymentMemberId();
             //paymentName();
 
@@ -638,6 +762,21 @@ public class dashboardController {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    private void cerrarConexion() {
+        try {
+            if (resultado != null) {
+                resultado.close();
+            }
+            if (prepare != null) {
+                prepare.close();
+            }
+            if (conexion != null) {
+                conexion.close();
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
         }
     }
 }
