@@ -77,6 +77,7 @@ public class AppController {
         conexion = conexionBdd.conexion();
         String sql = "SELECT * FROM public.usuarios WHERE usuarios.usuario = (?) and usuarios.clave = (?)";
         try {
+
             prepare = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             prepare.setString(1, si_usuario.getText());
             prepare.setString(2, si_pass.getText());

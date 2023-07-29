@@ -88,6 +88,11 @@
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font></MFXButton>
+                              <ImageView fitHeight="90.0" fitWidth="100.0" layoutX="69.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/userWhite.png" />
+                                 </image>
+                              </ImageView>
                            </children>
                         </AnchorPane>
                      </children>
@@ -181,7 +186,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="275.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
                                  <children>
@@ -336,21 +341,21 @@
                               </AnchorPane>
                               <AnchorPane layoutX="14.0" layoutY="241.0" prefHeight="300.0" prefWidth="855.0" style="-fx-background-color: #fff;">
                                  <children>
-                                    <MFXTableColumn fx:id="cedulaTablaClienteCol" prefHeight="18.0" prefWidth="69.0" style="-fx-background-color: #fd64;" text="Cedula" />
-                                    <MFXTableColumn fx:id="nombreTablaClienteCol" layoutX="72.0" style="-fx-background-color: #2d4f;" text="Nombres" />
-                                    <MFXTableColumn fx:id="apellidoTablaClienteCol" layoutX="172.0" style="-fx-background-color: #fd64;" text="Apellidos" />
-                                    <MFXTableColumn fx:id="telefonoTablaClienteCol" layoutX="272.0" style="-fx-background-color: #2d4f;" text="Telefono" />
-                                    <MFXTableColumn fx:id="direccionTablaClienteCol" layoutX="372.0" prefHeight="18.0" prefWidth="160.0" style="-fx-background-color: #fd64;" text="Direccion" />
-                                    <MFXTableColumn fx:id="sexoTablaClienteCol" layoutX="531.0" minWidth="41.0" prefHeight="18.0" prefWidth="41.0" style="-fx-background-color: #2d4f;" text="Sexo" />
-                                    <MFXTableColumn fx:id="fechaPagoClienteCol" layoutX="572.0" style="-fx-background-color: #fd64;" text="F. Pago" />
-                                    <MFXTableColumn fx:id="fechaVencimientoClienteCol" layoutX="672.0" style="-fx-background-color: #2d4f;" text="F. Vencimiento" />
-                                    <MFXTableColumn fx:id="estatusClienteCol" layoutX="778.0" minWidth="79.0" prefHeight="18.0" prefWidth="79.0" style="-fx-background-color: #fd64;" text="Estatus" />
+                                    <MFXTableColumn fx:id="cedulaTablaClienteCol" alignment="CENTER" prefHeight="18.0" prefWidth="69.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Cedula" />
+                                    <MFXTableColumn fx:id="nombreTablaClienteCol" alignment="CENTER" layoutX="72.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Nombres" />
+                                    <MFXTableColumn fx:id="apellidoTablaClienteCol" alignment="CENTER" layoutX="172.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Apellidos" />
+                                    <MFXTableColumn fx:id="telefonoTablaClienteCol" alignment="CENTER" layoutX="272.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Telefono" />
+                                    <MFXTableColumn fx:id="direccionTablaClienteCol" alignment="CENTER" layoutX="372.0" prefHeight="18.0" prefWidth="160.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Direccion" />
+                                    <MFXTableColumn fx:id="sexoTablaClienteCol" alignment="CENTER" layoutX="531.0" minWidth="41.0" prefHeight="18.0" prefWidth="41.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Sexo" />
+                                    <MFXTableColumn fx:id="fechaPagoClienteCol" alignment="CENTER" layoutX="572.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="F. Pago" />
+                                    <MFXTableColumn fx:id="fechaVencimientoClienteCol" alignment="CENTER" layoutX="672.0" prefHeight="20.0" prefWidth="108.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="F. Vencimiento" />
+                                    <MFXTableColumn fx:id="estatusClienteCol" alignment="CENTER" layoutX="778.0" minWidth="79.0" prefHeight="18.0" prefWidth="79.0" style="-fx-background-color: #2a3548; -fx-text-fill: #e6f1ff; -fx-border-color: #e6f1ff;" text="Estatus" />
                                  </children>
                               </AnchorPane>
                               <Separator layoutX="14.0" layoutY="227.0" prefHeight="0.0" prefWidth="856.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="595.0" layoutY="13.0" prefHeight="523.0" prefWidth="275.0" style="-fx-background-color: #e6f1ff;">
                                  <children>
@@ -381,28 +386,28 @@
                                  <children>
                                     <MFXLegacyTableView layoutX="117.0" layoutY="-77.0" prefHeight="250.0" prefWidth="570.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="0.0">
                                        <columns>
-                                          <TableColumn fx:id="cedulaClienteColPago" prefWidth="75.0" text="Cedula Identidad" />
-                                          <TableColumn fx:id="nombreClienteColPago" prefWidth="75.0" text="Nombres" />
+                                          <TableColumn fx:id="cedulaClienteColPago" prefWidth="75.99998760223389" text="Cedula Identidad" />
+                                          <TableColumn fx:id="nombreClienteColPago" prefWidth="74.39996337890625" text="Nombres" />
                                           <TableColumn fx:id="apellidoClienteColPago" prefWidth="75.0" text="Apellidos" />
                                           <TableColumn fx:id="fechaClienteInicioColPago" prefWidth="75.0" text="Fecha inicio" />
-                                          <TableColumn fx:id="fechaClienteVencPago" prefWidth="75.0" text="Fecha venc" />
-                                          <TableColumn fx:id="telefonoClienteColPago" prefWidth="75.0" text="Telefono" />
-                                          <TableColumn fx:id="estatusClienteColPago" prefWidth="75.0" text="Estatus" />
+                                          <TableColumn fx:id="fechaClienteVencPago" prefWidth="100.00006103515625" text="Fecha venc" />
+                                          <TableColumn fx:id="telefonoClienteColPago" prefWidth="68.7999267578125" text="Telefono" />
+                                          <TableColumn fx:id="estatusClienteColPago" prefWidth="102.39996337890625" text="Estatus" />
                                        </columns>
                                     </MFXLegacyTableView>
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="14.0" layoutY="287.0" prefHeight="250.0" prefWidth="565.0" style="-fx-background-color: #198b;">
                                  <children>
-                                    <MFXLegacyTableView layoutY="-103.0" prefHeight="250.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <MFXLegacyTableView layoutY="-103.0" prefHeight="250.0" prefWidth="573.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-7.0" AnchorPane.topAnchor="0.0">
                                        <columns>
-                                          <TableColumn fx:id="idPago" prefWidth="75.0" text="ID Pago" />
-                                          <TableColumn fx:id="cedulaColPago" prefWidth="75.0" text="Cedula Cliente" />
+                                          <TableColumn fx:id="idPago" prefWidth="55.99998760223389" text="ID Pago" />
+                                          <TableColumn fx:id="cedulaColPago" prefWidth="94.39996337890625" text="Cedula Cliente" />
                                           <TableColumn fx:id="fechaInicioColPago" prefWidth="75.0" text="Fecha pago" />
                                           <TableColumn fx:id="fechaVencColPago" prefWidth="75.0" text="Fecha Venc" />
-                                          <TableColumn fx:id="metodoClienteColPago" prefWidth="75.0" text="Metodo Pago" />
-                                          <TableColumn fx:id="bcvTasaColPago" prefWidth="75.0" text="Tasa BCV" />
-                                          <TableColumn fx:id="montoColPago" prefWidth="75.0" text="Monto" />
+                                          <TableColumn fx:id="metodoClienteColPago" prefWidth="84.79998779296875" text="Metodo Pago" />
+                                          <TableColumn fx:id="bcvTasaColPago" prefWidth="87.20001220703125" text="Tasa BCV" />
+                                          <TableColumn fx:id="montoColPago" prefWidth="99.20001220703125" text="Monto" />
                                        </columns>
                                     </MFXLegacyTableView>
                                  </children>
