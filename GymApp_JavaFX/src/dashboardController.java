@@ -19,9 +19,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -244,10 +251,10 @@ public class dashboardController {
     private MFXRadioButton pagoMesBtn;
 
     @FXML
-    private MFXComboBox<?> pagoMesCombo;
+    private MFXComboBox<Integer> pagoMesCombo;
 
     @FXML
-    private MFXComboBox<?> pagoMesCombo1;
+    private MFXComboBox<?> pagoMetodoCombo;
 
     @FXML
     private MFXRadioButton pagoSemanaBtn;
@@ -293,6 +300,9 @@ public class dashboardController {
 
     @FXML
     private Label totalPagoLbl;
+
+    @FXML
+    private TableColumn<pagosDatos, Double> totalColPago;
 
     @FXML
     private MFXComboBox<?> casaPrefijoInstCombo;
@@ -383,6 +393,7 @@ public class dashboardController {
                     instructoresMostrarDatos();
                     //Limpiar datos cuando se ingrese el nuevo instructor
                     instructoresLimpiarDatos();
+                    cerrarConexion();
 
                 }
 
@@ -621,8 +632,9 @@ public class dashboardController {
                 String metodo_pago = resultado.getString("metodo_pago");
                 double tasa_bcv = resultado.getDouble("tasa_bcv");
                 double monto = resultado.getDouble("monto");
+                double total = resultado.getDouble("total");
 
-                pago = new pagosDatos(id_pago, cedula_cliente, fecha_inicio_pago, fecha_vencimiento, metodo_pago, tasa_bcv, monto);
+                pago = new pagosDatos(id_pago, cedula_cliente, fecha_inicio_pago, fecha_vencimiento, metodo_pago, tasa_bcv, monto, total);
                 pagosDatos.add(pago);
             }
 
@@ -646,12 +658,170 @@ public class dashboardController {
         metodoClienteColPago.setCellValueFactory(new PropertyValueFactory<>("metodo_pago"));
         bcvTasaColPago.setCellValueFactory(new PropertyValueFactory<>("tasa_bcv"));
         montoColPago.setCellValueFactory(new PropertyValueFactory<>("monto"));
+        totalColPago.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         // Mostrar los datos en la tabla
         tablaPagosVista.setItems(datosPagos);
     }
 
-    public void nuevoPagoBtn(){
+    public void obtenertasaBCV() {
+        String url = "https://api.exchangedyn.com/markets/quotes/usdves/bcv";
+        String tasaBCV = null;
+        String salida = null;
+
+        try {
+            URL obj = new URL(url);
+            HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+            con.setRequestMethod("GET");
+
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
+
+            JSONObject json = new JSONObject(response.toString());
+            JSONObject sources = json.getJSONObject("sources");
+            JSONObject bcv = sources.getJSONObject("BCV");
+            tasaBCV = bcv.getString("quote");
+            double doblebcv = Double.parseDouble(tasaBCV);
+            salida = doblebcv + "Bs";
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bcvCheckLbl.setText(salida);
+    }
+
+    private String prefC[] = {"V", "E", "J"};
+    public void prefCedula(){
+        List<String> cedulaLista = new ArrayList<>();
+
+        for (String data: prefC){
+            cedulaLista.add(data);
+        }
+
+        ObservableList cedList = FXCollections.observableArrayList(cedulaLista);
+        pagoCedulaLetra.setItems(cedList);
+    }
+    private String metodo[] = {"Pago movil", "Efectivo", "Punto de venta", "Otro"};
+    public void metodoPago(){
+        List<String> metodoLista = new ArrayList<>();
+
+        for (String data: metodo){
+            metodoLista.add(data);
+        }
+
+        ObservableList cedList = FXCollections.observableArrayList(metodoLista);
+        pagoMetodoCombo.setItems(cedList);
+    }
+    public void mesesLista() {
+        List<Integer> mesesLista = new ArrayList<>();
+
+        for (int i = 1; i <= 12; i++) {
+            mesesLista.add(i);
+        }
+
+        ObservableList<Integer> mesesObservableList = FXCollections.observableArrayList(mesesLista);
+        pagoMesCombo.setItems(mesesObservableList);
+    }
+    public Date ObtenerFecha() {
+        Date fecha_vencimiento = null;
+        if (pagoDiaBtn.isSelected()) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            fecha_vencimiento = new Date(calendar.getTime().getTime());
+        } else if (pagoSemanaBtn.isSelected()) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, 7);
+            fecha_vencimiento = new Date(calendar.getTime().getTime());
+        } else if (pagoMesBtn.isSelected()) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DAY_OF_MONTH, 30);
+            fecha_vencimiento = new Date(calendar.getTime().getTime());
+        } else if (pagoMesCombo.getSelectionModel().getSelectedItem() != null) {
+            int meses = Integer.parseInt(pagoMesCombo.getValue().toString());
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.MONTH, meses);
+            fecha_vencimiento = new Date(calendar.getTime().getTime());
+        }
+        return fecha_vencimiento;
+    }
+
+    public double doubleDesdeString(String texto) {
+        String soloNumeros = texto.replaceAll("[^\\d.]", "");
+        String primerosSeisDigitos = soloNumeros.substring(0, Math.min(soloNumeros.length(), 6));
+        double resultado = Double.parseDouble(primerosSeisDigitos);
+
+        return resultado;
+    }
+
+    public void calcularTotal(){
+        double tasa_bcv = doubleDesdeString(bcvCheckLbl.getText());
+        double monto = doubleDesdeString(montoPagoBtn.getText());
+        String resultado = "" + tasa_bcv * monto + " Bs";
+        totalPagoLbl.setText(resultado);
+    }
+
+    public void nuevoPagoBtn() {
+        String sql = "INSERT INTO public.pagos (cedula_cliente, fecha_inicio_pago, fecha_vencimiento, metodo_pago, tasa_bcv, monto, total) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        conexion= conexionBdd.conexion();
+        Date fecha_venc = ObtenerFecha();
+
+        double tasa_bcv = doubleDesdeString(bcvCheckLbl.getText());
+        double monto = doubleDesdeString(montoPagoBtn.getText());
+        double total = doubleDesdeString(totalPagoLbl.getText());
+
+        try {
+            Alert alert;
+            if (pagoCedulaCampo.getText().isEmpty() || pagoCedulaLetra.getSelectionModel().getSelectedItem() == null || ObtenerFecha() == null
+                || pagoMetodoCombo.getSelectionModel().getSelectedItem() == null || montoPagoBtn.getText().isEmpty())
+            {camposVacios();}else{
+                String cedula_cliente = (String) pagoCedulaLetra.getSelectionModel().getSelectedItem() + pagoCedulaCampo.getText();
+                java.sql.Date fecha_inicio_pago = new java.sql.Date(System.currentTimeMillis());
+                java.sql.Date fecha_vencimiento = new java.sql.Date(fecha_venc.getTime());
+                String metodo_pago = (String) pagoMetodoCombo.getSelectionModel().getSelectedItem();
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Mensaje de confirmacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Estas a punto de añadir un pago al cliente: " + (String) pagoCedulaLetra.getSelectionModel().getSelectedItem() + pagoCedulaCampo.getText() + "");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get().equals(ButtonType.OK)){
+                    PreparedStatement prepare = conexion.prepareStatement(sql);
+                    prepare.setString(1, cedula_cliente);
+                    prepare.setDate(2, fecha_inicio_pago);
+                    prepare.setDate(3, fecha_vencimiento);
+                    prepare.setString(4, metodo_pago);
+                    prepare.setDouble(5, tasa_bcv);
+                    prepare.setDouble(6, monto);
+                    prepare.setDouble(7, total);
+                    prepare.executeUpdate();
+                    prepare.close();
+                    cerrarConexion();
+                    alert = new Alert (Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Pago registrado exitosamente!");
+                    alert.showAndWait();
+                    mostrarPagosDatos();
+                    //pagosLimpiarCampos();
+                }else {
+                    alert= new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro de pago cancelado!");
+                    alert.showAndWait();
+                }
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -676,7 +846,6 @@ public class dashboardController {
             clienteForm.setVisible(false);
             pagoForm.setVisible(false);
 
-            // TO UPDATE WHEN YOU CLICK THE MENU BUTTON LIKE COACHES BUTTON
             instructorSexoLista();
             prefijosMovilLista();
             prefijosFijoLista();
@@ -703,8 +872,10 @@ public class dashboardController {
             clienteForm.setVisible(false);
             pagoForm.setVisible(true);
 
+            prefCedula();
             mostrarPagosDatos();
-            //paymentMemberId();
+            mesesLista();
+            metodoPago();
             //paymentName();
 
         }

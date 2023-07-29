@@ -8,8 +8,9 @@ public class pagosDatos {
     private String metodo_pago;
     private double tasa_bcv;
     private double monto;
+    private double total;
 
-    public pagosDatos(int id_pago, String cedula_cliente, Date fecha_inicio_pago, Date fecha_vencimiento, String metodo_pago, double tasa_bcv, double monto) {
+    public pagosDatos(int id_pago, String cedula_cliente, Date fecha_inicio_pago, Date fecha_vencimiento, String metodo_pago, double tasa_bcv, double monto, double total) {
         this.id_pago = id_pago;
         this.cedula_cliente = cedula_cliente;
         this.fecha_inicio_pago = fecha_inicio_pago;
@@ -17,6 +18,7 @@ public class pagosDatos {
         this.metodo_pago = metodo_pago;
         this.tasa_bcv = tasa_bcv;
         this.monto = monto;
+        this.total = total;
     }
 
     public int getId_pago() {
@@ -46,4 +48,6 @@ public class pagosDatos {
     public double getMonto() {
         return monto;
     }
+
+    public double getTotal(){ return total; }
 }
