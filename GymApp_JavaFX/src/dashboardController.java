@@ -295,6 +295,36 @@ public class dashboardController {
     @FXML
     private MFXComboBox<?> movilPrefijoInstCombo;
 
+    @FXML
+    private TableView<miembrosDatos> miembrosTablaVista;
+
+    @FXML
+    private TableColumn<miembrosDatos, String> cedula_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, String> nombres_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, String> apellidos_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, String> telefono_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, String> direccion_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, String> sexo_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, Date> fechapago_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, Date> fechavencimiento_client_col;
+
+    @FXML
+    private TableColumn<miembrosDatos, String> estatus_client_col;
+
     private PreparedStatement prepare;
     private Connection conexion;
     private ResultSet resultado;
@@ -531,6 +561,127 @@ public class dashboardController {
         estatusInstructorAddCombo.setItems(stList);
     }
 
+    //Formulario Clientes
+    public ObservableList<miembrosDatos> miembrosDatosLista(){
+        ObservableList<miembrosDatos> miemDatos = FXCollections.observableArrayList();
+
+        String sql = "SELECT * FROM clientes";
+        conexion = conexionBdd.conexion();
+
+        try{
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            miembrosDatos cedulaCliente;
+
+            while(resultado.next()){
+                cedulaCliente = new miembrosDatos(resultado.getString("cedulaCliente"), resultado.getString("nombres"),
+                        resultado.getString("apellidos"), resultado.getString("telefono"),
+                        resultado.getString("direccion"), resultado.getDate("fechaPago"),
+                        resultado.getDate("fechaVencimiento"), resultado.getString("sexo"), resultado.getString("estatus"));
+                miemDatos.add(cedulaCliente);
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        return miemDatos;
+    }
+
+    private ObservableList<miembrosDatos> miembrosListaDatos;
+
+    public void miembrosMostrarDatos(){
+        miembrosListaDatos = miembrosDatosLista();
+
+        cedula_client_col.setCellValueFactory(new PropertyValueFactory<>("cedulaCliente"));
+        nombres_client_col.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        apellidos_client_col.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        telefono_client_col.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        direccion_client_col.setCellValueFactory(new PropertyValueFactory<>("direccion"));
+        fechapago_client_col.setCellValueFactory(new PropertyValueFactory<>("fechaPago"));
+        fechavencimiento_client_col.setCellValueFactory(new PropertyValueFactory<>("fechaVencimiento"));
+        sexo_client_col.setCellValueFactory(new PropertyValueFactory<>("sexo"));
+        estatus_client_col.setCellValueFactory(new PropertyValueFactory<>("estatus"));
+
+        miembrosTablaVista.setItems(miembrosListaDatos);
+
+    }
+
+    //limpiar los campos
+    public void clientesLimpiarDatos(){
+        cedulaLetraClienteCombo.getSelectionModel().clearSelection();
+        cedulaCodigoClienteAddField.setText("");
+        nombreClienteAddField.setText("");
+        apellidoClienteAddField.setText("");
+        telefonoClienteAddField.setText("");
+        direccionClienteAddField.setText("");
+        fechaInicioClienteAddDate.setValue(null);
+        fechaVencClienteAddDate.setValue(null);
+        sexoClienteAddCombo.getSelectionModel().clearSelection();
+        estatusClienteAddCombo.getSelectionModel().clearSelection();
+    }
+
+    //agregar nuevo cliente
+    public void clientesNuevoBoton(){
+        String sql = "INSERT INTO public.clientes(\n" +
+                "\tcedula_cliente, nombres, apellidos, telefono_movil, direccion, sexo, estatus)\n" +
+                "\tVALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+
+        conexion = conexionBdd.conexion();
+
+        try {
+            Alert alert;
+
+            if (cedulaLetraClienteCombo.getSelectionModel().getSelectedItem() == null || cedulaCodigoClienteAddField.getText().isEmpty() || nombreClienteAddField.getText().isEmpty() || apellidoClienteAddField.getText().isEmpty()
+                    || telefonoClienteAddField.getText().isEmpty() || direccionClienteAddField.getText().isEmpty() || fechaInicioClienteAddDate.getValue() == null || fechaVencClienteAddDate.getValue() == null
+                    || sexoClienteAddCombo.getSelectionModel().getSelectedItem() == null
+                    || estatusClienteAddCombo.getSelectionModel().getSelectedItem() == null){
+
+                camposVacios();
+            }else{
+                String revisarDatos = "SELECT cedula_cliente from clientes WHERE cedula_cliente = '"+cedulaCodigoClienteAddField.getText()+"'";
+
+                statement = conexion.createStatement();
+                resultado = statement.executeQuery(revisarDatos);
+
+                if (resultado.next()){
+                    alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Faltan campos");
+                    alert.setHeaderText(null);
+                    alert.setContentText("El número de cedula: " + cedulaCodigoClienteAddField.getText() + "Ya esta registrado");
+                    alert.showAndWait();
+                }else{
+                    prepare = conexion.prepareStatement(sql);
+                    prepare.setString(1, cedulaCodigoClienteAddField.getText());
+                    prepare.setString(2, nombreClienteAddField.getText());
+                    prepare.setString(3, apellidoClienteAddField.getText());
+                    prepare.setString(4, telefonoClienteAddField.getText());
+                    prepare.setString(5, direccionClienteAddField.getText());
+                    //prepare.setString(6, fechaInicioClienteAddDate.getText());
+                    //prepare.setString(7, fechaVencClienteAddDate.getText());
+                    prepare.setString(8, sexoClienteAddCombo.getText());
+                    prepare.setString(9, (String)estatusClienteAddCombo.getSelectionModel().getSelectedItem());
+
+                    alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Registro exitoso");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Cliente registrado exitosamente");
+                    alert.showAndWait();
+
+                    //Para ingresar los datos y mostrarlos denuevo en la tabla
+                    prepare.executeUpdate();
+                    miembrosMostrarDatos();
+                    //Limpiar datos cuando se ingrese el nuevo cliente
+                    clientesLimpiarDatos();
+
+                }
+
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
     public void cambiarForm(ActionEvent event) {
 
         if (event.getSource() == mainDashboardBtn) {
@@ -567,7 +718,7 @@ public class dashboardController {
             clienteForm.setVisible(true);
             pagoForm.setVisible(false);
 
-            //membersShowData();
+            miembrosMostrarDatos();
             instructorSexoLista();
             //membersSchedule();
             estatusCliente();
