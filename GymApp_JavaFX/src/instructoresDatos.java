@@ -35,11 +35,33 @@ public class instructoresDatos {
     public String getTelefono_movil(){
         return telefono_movil;
     }
-    public String getTelefono_casa(){
-        return telefono_casa;
-    }
+    public String getTelefono_casa(){return telefono_casa;}
     public String getEstatus(){
         return estatus;
     }
+    public String getPrefijoMovil() {
+        if (telefono_movil != null && telefono_movil.length() >= 4) {
+            return telefono_movil.substring(0, 4);
+        }
+        return "";
+    }
 
+    public String getPrefijoCasa() {
+        if (telefono_casa != null && telefono_casa.length() >= 4) {
+            return telefono_casa.substring(0, 4);
+        }
+        return "";
+    }
+    public String getTelefonoMovilRestante() {
+        if (telefono_movil != null && telefono_movil.length() >= 11) {
+            return telefono_movil.substring(4);
+        }
+        return "";
+    }
+    public String getTelefonoCasaRestante() {
+        if (telefono_casa != null && telefono_casa.length() >= 11) {
+            return telefono_casa.substring(4);
+        }
+        return "";
+    }
 }
