@@ -191,7 +191,7 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="275.0" style="-fx-background-color: #e6f1ff; -fx-border-color: #e6f1ff;">
                                  <children>
@@ -234,22 +234,50 @@
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
                                     </Label>
-                                    <MFXButton fx:id="addInstructorBtn" buttonType="RAISED" layoutX="19.0" layoutY="427.0" onAction="#instructoresNuevoBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Añadir">
+                                    <MFXButton fx:id="addInstructorBtn" alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="19.0" layoutY="427.0" onAction="#instructoresNuevoBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Agregar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
-                                       </font></MFXButton>
-                                    <MFXButton fx:id="editInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="427.0" onAction="#instructoresActualizarBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Actualizar">
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/addClient.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></MFXButton>
+                                    <MFXButton fx:id="editInstructorBtn" alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="148.0" layoutY="427.0" onAction="#instructoresActualizarBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Actualizar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
-                                       </font></MFXButton>
-                                    <MFXButton fx:id="cleanInstructorFieldBtn" buttonType="RAISED" layoutX="19.0" layoutY="476.0" onAction="#instructoresLimpiarDatos" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Limpiar">
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/update.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></MFXButton>
+                                    <MFXButton fx:id="cleanInstructorFieldBtn" alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="19.0" layoutY="476.0" onAction="#instructoresLimpiarDatos" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Limpiar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
-                                       </font></MFXButton>
-                                    <MFXButton fx:id="deleteInstructorBtn" buttonType="RAISED" layoutX="148.0" layoutY="476.0" onAction="#instructoresEliminarBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Eliminar">
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/clear.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></MFXButton>
+                                    <MFXButton fx:id="deleteInstructorBtn" alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="148.0" layoutY="476.0" onAction="#instructoresEliminarBoton" prefHeight="35.0" prefWidth="110.0" style="-fx-border-color: #0d121a;" text="Eliminar">
                                        <font>
                                           <Font name="Arial Black" size="14.0" />
-                                       </font></MFXButton>
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="28.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/delete.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic></MFXButton>
                                     <MFXTextField fx:id="apellidosInstructorAddField" layoutX="85.0" layoutY="113.0" minHeight="25.0" minWidth="80.0" prefHeight="35.0" prefWidth="170.0" promptText="Ingrese..." style="-fx-border-color: #0d121a;" />
                                     <Label layoutX="14.0" layoutY="123.0" style="-fx-text-fill: #0d121a;" text="Apellidos:">
                                        <font>
@@ -291,7 +319,7 @@
                               <Separator layoutX="302.0" layoutY="14.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="9.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="clienteForm" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="clienteForm" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="13.0" layoutY="14.0" prefHeight="200.0" prefWidth="855.0" style="-fx-background-color: #e6f1ff;">
                                  <children>
