@@ -32,6 +32,8 @@ import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import javafx.scene.control.DialogPane;
+
 public class dashboardController {
 
     @FXML
@@ -548,6 +550,9 @@ public class dashboardController {
                     alert.setTitle("Faltan campos");
                     alert.setHeaderText(null);
                     alert.setContentText("El numero de cedula: " + cedulaInstructorAddField.getText() + "Ya esta registrado");
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+                    dialogPane.getStyleClass().add("myDialog");
                     alert.showAndWait();
                 }else{
                     prepare = conexion.prepareStatement(sql);
@@ -564,6 +569,9 @@ public class dashboardController {
                     alert.setTitle("Registro exitoso");
                     alert.setHeaderText(null);
                     alert.setContentText("Instructor registrado exitosamente");
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+                    dialogPane.getStyleClass().add("myDialog");
                     alert.showAndWait();
 
                     //Para ingresar los datos y mostrarlos denuevo en la tabla
@@ -610,6 +618,9 @@ public class dashboardController {
                 alert.setTitle("Mensaje de confirmacion");
                 alert.setHeaderText(null);
                 alert.setContentText("Estas seguro que deseas ACTUALIZAR los datos del instructor: " + cedulaInstructorAddField.getText() + "?");
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+                dialogPane.getStyleClass().add("myDialog");
                 Optional<ButtonType> option = alert.showAndWait();
                 if (option.get().equals(ButtonType.OK)){
                     prepare = conexion.prepareStatement(sql);
@@ -658,6 +669,9 @@ public class dashboardController {
                 alert.setTitle("Mensaje de confirmacion");
                 alert.setHeaderText(null);
                 alert.setContentText("Estas seguro que deseas ELIMINAR los datos del instructor: " + cedulaInstructorAddField.getText() + "?");
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+                dialogPane.getStyleClass().add("myDialog");
                 Optional<ButtonType> option = alert.showAndWait();
                 if (option.get().equals(ButtonType.OK)){
                     prepare = conexion.prepareStatement(sql);
@@ -1286,6 +1300,9 @@ public class dashboardController {
                     alert.setTitle("Registro exitoso");
                     alert.setHeaderText(null);
                     alert.setContentText("Cliente registrado exitosamente");
+                    DialogPane dialogPane = alert.getDialogPane();
+                    dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+                    dialogPane.getStyleClass().add("myDialog");
                     alert.showAndWait();
 
                     //Para ingresar los datos y mostrarlos denuevo en la tabla
@@ -1324,6 +1341,9 @@ public class dashboardController {
                 alert.setTitle("Mensaje de confirmacion");
                 alert.setHeaderText(null);
                 alert.setContentText("Estas seguro que deseas ACTUALIZAR los datos del cliente: " + cedulaCodigoClienteAddField.getText() + "?");
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+                dialogPane.getStyleClass().add("myDialog");
                 Optional<ButtonType> option = alert.showAndWait();
                 if (option.get().equals(ButtonType.OK)){
                     prepare = conexion.prepareStatement(sql);
@@ -1370,6 +1390,9 @@ public class dashboardController {
                 alert.setTitle("Mensaje de confirmacion");
                 alert.setHeaderText(null);
                 alert.setContentText("Estas seguro que deseas ELIMINAR los datos del cliente: " + cedulaCodigoClienteAddField.getText() + "?");
+                DialogPane dialogPane = alert.getDialogPane();
+                dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+                dialogPane.getStyleClass().add("myDialog");
                 Optional<ButtonType> option = alert.showAndWait();
                 if (option.get().equals(ButtonType.OK)){
                     prepare = conexion.prepareStatement(sql);
@@ -1421,6 +1444,9 @@ public class dashboardController {
             alert.setTitle("Mensaje de confirmación");
             alert.setHeaderText(null);
             alert.setContentText("Estás seguro que quieres cerrar la sesión?");
+            DialogPane dialogPane = alert.getDialogPane();
+            dialogPane.getStylesheets().add(getClass().getResource("dialogModal.css").toExternalForm());
+            dialogPane.getStyleClass().add("myDialog");
             Optional<ButtonType> option = alert.showAndWait();
 
             if (option.get().equals(ButtonType.OK)) {
