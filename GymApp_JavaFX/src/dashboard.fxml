@@ -291,7 +291,7 @@
                               <Separator layoutX="302.0" layoutY="14.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="9.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="clienteForm" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="clienteForm" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="13.0" layoutY="14.0" prefHeight="200.0" prefWidth="855.0" style="-fx-background-color: #e6f1ff;">
                                  <children>
@@ -372,7 +372,7 @@
                               <Separator layoutX="14.0" layoutY="227.0" prefHeight="0.0" prefWidth="856.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="595.0" layoutY="13.0" prefHeight="523.0" prefWidth="275.0" style="-fx-background-color: #e6f1ff;">
                                  <children>
@@ -402,7 +402,7 @@
                                     <MFXButton fx:id="eliminarPagoBtn" layoutX="143.0" layoutY="450.0" onAction="#pagosEliminarPago" prefHeight="50.0" prefWidth="75.0" style="-fx-border-color: #0d121a;" text="Eliminar" />
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="250.0" prefWidth="565.0" style="-fx-background-color: #198b;">
+                              <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="250.0" prefWidth="565.0" style="-fx-background-color: #198b;" visible="false">
                                  <children>
                                     <MFXLegacyTableView layoutX="117.0" layoutY="-77.0" prefHeight="250.0" prefWidth="570.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-5.0" AnchorPane.topAnchor="0.0">
                                        <columns>
@@ -417,7 +417,7 @@
                                     </MFXLegacyTableView>
                                  </children>
                               </AnchorPane>
-                              <AnchorPane layoutX="14.0" layoutY="287.0" prefHeight="250.0" prefWidth="565.0" style="-fx-background-color: #198b;">
+                              <AnchorPane layoutX="14.0" layoutY="12.0" prefHeight="525.0" prefWidth="565.0" style="-fx-background-color: #198b;">
                                  <children>
                                     <MFXLegacyTableView fx:id="tablaPagosVista" layoutY="-103.0" prefHeight="250.0" prefWidth="565.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
@@ -433,7 +433,7 @@
                                     </MFXLegacyTableView>
                                  </children>
                               </AnchorPane>
-                              <Separator layoutX="14.0" layoutY="274.0" prefHeight="2.0" prefWidth="565.0" />
+                              <Separator layoutX="14.0" layoutY="274.0" prefHeight="2.0" prefWidth="565.0" visible="false" />
                            </children>
                         </AnchorPane>
                      </children>

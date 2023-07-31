@@ -28,11 +28,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.*;
+import java.sql.Date;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class dashboardController {
 
@@ -348,6 +346,15 @@ public class dashboardController {
     private void initialize(){
         mostrarNombreUsuario();
         gruposRadio();
+        prefCedula();
+        mesesLista();
+        prefijosFijoLista();
+        prefijosMovilLista();
+        instructorSexoLista();
+        numeroClientes();
+        totalInstructores();
+        totalIngresoMensual();
+        mostrarEstadisticas();
     }
 
     private PreparedStatement prepare;
@@ -745,16 +752,16 @@ public class dashboardController {
         if ((num - 1) < -1) return;
 
         cedulaInstructorAddField.setText(id.getsoloId_instructor());
-        cedulaInstPrefCombo.setText(id.getTipoCedula());
+        cedulaInstPrefCombo.getSelectionModel().selectFirst();
         nombreInstructorAddField.setText(id.getNombres());
         apellidosInstructorAddField.setText(id.getApellidos());
         direccionInstructorAddField.setText(id.getDireccion());
-        sexoInstructorAddCombo.setText(id.getSexo());
+        sexoInstructorAddCombo.getSelectionModel().selectFirst();
         telefonoMovilInstructorAddField.setText(id.getTelefonoMovilRestante());
-        movilPrefijoInstCombo.setText(id.getPrefijoMovil());
+        movilPrefijoInstCombo.getSelectionModel().selectFirst();
         telefonoCasaInstructorAddField.setText(id.getTelefonoCasaRestante());
-        casaPrefijoInstCombo.setText(id.getPrefijoCasa());
-        estatusInstructorAddCombo.setText(id.getEstatus());
+        casaPrefijoInstCombo.getSelectionModel().selectFirst();
+        estatusInstructorAddCombo.getSelectionModel().selectFirst();
     }
 
     private String sexo[] = {"Masculino", "Femenino", "Otro"};
@@ -837,8 +844,8 @@ public class dashboardController {
         tablaPagosVista.setItems(datosPagos);
     }
 
-    public ObservableList<miembrosJoin> obtenerJoin(){
-        ObservableList<miembrosJoin> joinDatos = FXCollections.observableArrayList();
+ /*   public ObservableList<miembrosJoin> obtenerJoin(){
+        ObservableList<miembrosJoin> miembrosJoin = FXCollections.observableArrayList();
 
         String sql= "SELECT c.cedula_cliente, c.nombres, c.apellidos, c.telefono_movil, c.estatus, p.fecha_inicio_pago, p.fecha_vencimiento\n" +
                     "FROM clientes c LEFT JOIN pagos p ON c.cedula_cliente = p.cedula_cliente ORDER BY c.cedula_cliente;";
@@ -852,20 +859,37 @@ public class dashboardController {
             miembrosJoin mj;
 
             while(resultado.next()){
-
-                mj = new miembrosJoin(resultado.getString("c.cedula_cliente"), resultado.getString("c.nombres"),
-                        resultado.getString("c.apellidos"), resultado.getString("c.telefono_movil"),
-                        resultado.getString("c.estatus"), resultado.getDate("p.fecha_inicio_pago"), resultado.getDate("p.fecha_vencimiento"));
-
-                joinDatos.add(mj);
+                String cedulaCliente = resultado.getString("cedula_cliente");
+                System.out.println(cedulaCliente);
+                String nombres = resultado.getString("nombres");
+                System.out.println(nombres);
+                String apellidos = resultado.getString("apellidos");
+                System.out.println(apellidos);
+                String telefonoMovil = resultado.getString("telefono_movil");
+                System.out.println("telefonoMovil = " + telefonoMovil);
+                String estatus = resultado.getString("estatus");
+                System.out.println("estatus = " + estatus);
+                Date fechaInicioPago = resultado.getDate("fecha_inicio_pago");
+                System.out.println("fechaInicioPago = " + fechaInicioPago);
+                if (resultado.wasNull()) {
+                    fechaInicioPago = null;
+                }
+                Date fechaVencimiento = resultado.getDate("fecha_vencimiento");
+                System.out.println("fechaVencimiento = " + fechaVencimiento);
+                if (resultado.wasNull()) {
+                    fechaVencimiento = null;
+                }
+                mj = new miembrosJoin(cedulaCliente, nombres, apellidos, telefonoMovil, estatus, fechaInicioPago, fechaVencimiento);
+                miembrosJoin.add(mj);
 
             }
 
         }catch(Exception e){
             System.out.println(e);
+        } finally{
+            cerrarConexion();
         }
-
-        return joinDatos;
+        return miembrosJoin;
     }
     private ObservableList<miembrosJoin> miembrosJoinLista;
     public void mostrarMiembrosJoinDatos(){
@@ -874,13 +898,13 @@ public class dashboardController {
         cedulaClienteColPago.setCellValueFactory(new PropertyValueFactory<>("cedula_cliente"));
         nombreClienteColPago.setCellValueFactory(new PropertyValueFactory<>("nombres"));
         apellidos_inst_col.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
-        fechaClienteInicioColPago.setCellValueFactory(new PropertyValueFactory<>("fecha_inicio_pago"));
-        fechaClienteVencPago.setCellValueFactory(new PropertyValueFactory<>("fecha_vencimiento"));
-        telefonoClienteColPago.setCellValueFactory(new PropertyValueFactory<>("telefono_movil"));
+        fechaClienteInicioColPago.setCellValueFactory(new PropertyValueFactory<>("fechaInicioPago"));
+        fechaClienteVencPago.setCellValueFactory(new PropertyValueFactory<>("fechaVencimiento"));
+        telefonoClienteColPago.setCellValueFactory(new PropertyValueFactory<>("telefonoMovil"));
         estatusClienteColPago.setCellValueFactory(new PropertyValueFactory<>("estatus"));
 
         joinClientesPagos.setItems(miembrosJoinLista);
-    }
+    }*/
 
     public void obtenertasaBCV() {
         String url = "https://api.exchangedyn.com/markets/quotes/usdves/bcv";
@@ -993,7 +1017,8 @@ public class dashboardController {
             Alert alert;
             String valorBase = "0,00 Bs.";
             if (pagoCedulaCampo.getText().isEmpty() || pagoCedulaLetra.getSelectionModel().getSelectedItem() == null || ObtenerFecha() == null
-                || pagoMetodoCombo.getSelectionModel().getSelectedItem() == null || montoPagoBtn.getText().isEmpty() || !bcvCheckLbl.getText().equals(valorBase) || !totalPagoLbl.getText().equals(valorBase))
+                || pagoMetodoCombo.getSelectionModel().getSelectedItem() == null || montoPagoBtn.getText().isEmpty()
+                || bcvCheckLbl.getText().getBytes() == valorBase.getBytes() || totalPagoLbl.getText().equals(valorBase))
                 {camposVacios();}else{
                 String cedula_cliente = (String) pagoCedulaLetra.getSelectionModel().getSelectedItem() + pagoCedulaCampo.getText();
                 java.sql.Date fecha_inicio_pago = new java.sql.Date(System.currentTimeMillis());
@@ -1055,6 +1080,42 @@ public class dashboardController {
     }
 
     public void pagosEliminarPago(){
+        pagosDatos pd = tablaPagosVista.getSelectionModel().getSelectedItem();
+        int num = tablaPagosVista.getSelectionModel().getSelectedIndex() + 1;
+        String sql = "DELETE FROM pagos WHERE id_pago = '"+num+"'";
+        Alert alert;
+        conexion = conexionBdd.conexion();
+
+        try{
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Mensaje de confirmacion");
+            alert.setHeaderText(null);
+            alert.setContentText("Estas seguro que deseas ELIMINAR el pago id:" + num + "?");
+            Optional<ButtonType> option = alert.showAndWait();
+            if (option.get().equals(ButtonType.OK)){
+                prepare = conexion.prepareStatement(sql);
+
+                prepare.executeUpdate();
+
+                alert = new Alert (Alert.AlertType.INFORMATION);
+                alert.setTitle("Mensaje de informacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Pago eliminado exitosamente!");
+                alert.showAndWait();
+                mostrarPagosDatos();
+            }else{
+                alert= new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Mensaje de informacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Eliminacion cancelada!");
+                alert.showAndWait();
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+
 
     }
     //cambiar formularios
@@ -1079,9 +1140,7 @@ public class dashboardController {
             clienteForm.setVisible(false);
             pagoForm.setVisible(false);
 
-            instructorSexoLista();
-            prefijosMovilLista();
-            prefijosFijoLista();
+
             estatusCliente();
             instructoresMostrarDatos();
 
@@ -1093,7 +1152,6 @@ public class dashboardController {
             clienteForm.setVisible(true);
             pagoForm.setVisible(false);
 
-            instructorSexoLista();
             miembrosMostrarDatos();
             estatusCliente();
 
@@ -1104,10 +1162,9 @@ public class dashboardController {
             clienteForm.setVisible(false);
             pagoForm.setVisible(true);
 
-            prefCedula();
             mostrarPagosDatos();
-            mostrarMiembrosJoinDatos();
-            mesesLista();
+            //mostrarMiembrosJoinDatos();
+
             metodoPago();
 
 
@@ -1163,14 +1220,14 @@ public class dashboardController {
         int num = miembrosTablaVista.getSelectionModel().getSelectedIndex();
 
         if ((num -1) < -1 ) return;
-        cedulaLetraClienteCombo.setText(md.getTipoCedula());
+        cedulaLetraClienteCombo.getSelectionModel().selectFirst();
         cedulaCodigoClienteAddField.setText(md.getsoloCedula_cliente());
         nombreClienteAddField.setText(md.getNombres());
         apellidoClienteAddField.setText(md.getApellidos());
-        telefonoClienteAddField.setText(md.getTelefonoMovilRestante());
+        telefonoClienteAddField.setText(md.getTelefono_movil());
         direccionClienteAddField.setText(md.getDireccion());
-        sexoClienteAddCombo.setText(md.getSexo());
-        estatusClienteAddCombo.setText(md.getEstatus());
+        sexoClienteAddCombo.getSelectionModel().selectFirst();
+        estatusClienteAddCombo.getSelectionModel().selectFirst();
 
     }
 

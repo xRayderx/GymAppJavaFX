@@ -1,7 +1,7 @@
 import java.util.Date;
-
-public class miembrosJoin
-{        private String cedula_cliente;
+/*
+public class miembrosJoin{
+        private String cedula_cliente;
         private String nombres;
         private String apellidos;
         private String telefono_movil;
@@ -55,4 +55,56 @@ public class miembrosJoin
             }
             return "";
         }
+        public Date getFecha_inicio_pago(){return fecha_inicio_pago;}
+        public Date getFecha_vencimiento(){return fecha_vencimiento;}
+
+}
+*/
+public class miembrosJoin {
+    private String cedulaCliente;
+    private String nombres;
+    private String apellidos;
+    private String telefonoMovil;
+    private String estatus;
+    private Date fechaInicioPago;
+    private Date fechaVencimiento;
+
+    public miembrosJoin(String cedulaCliente, String nombres, String apellidos, String telefonoMovil, String estatus, Date fechaInicioPago, Date fechaVencimiento) {
+        this.cedulaCliente = cedulaCliente;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.telefonoMovil = telefonoMovil;
+        this.estatus = estatus;
+        this.fechaInicioPago = fechaInicioPago;
+        this.fechaVencimiento = fechaVencimiento;
+    }
+
+    // Métodos getters
+    public String getCedulaCliente() {
+        return cedulaCliente;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public String getTelefonoMovil() {
+        return telefonoMovil;
+    }
+
+    public String getEstatus() {
+        return estatus;
+    }
+
+    public Date getFechaInicioPago() {
+        return fechaInicioPago;
+    }
+
+    public Date getFechaVencimiento() {
+        return fechaVencimiento;
+    }
 }
