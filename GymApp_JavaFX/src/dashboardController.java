@@ -1243,6 +1243,106 @@ public class dashboardController {
         }
     }
 
+    //actualizar cliente
+    public void clientesActualizarBoton(){
+        String sql = "UPDATE public.clientes "
+                + "SET cedula_cliente = '" + cedulaCodigoClienteAddField.getText() + "', "
+                + "nombres = '" + nombreClienteAddField.getText() + "', "
+                + "apellidos = '" + apellidoClienteAddField.getText() + "', "
+                + "telefono_movil = '" + telefonoClienteAddField.getText() + "', "
+                + "direccion = '" + direccionClienteAddField.getText() + "', "
+                + "sexo = '" + sexoClienteAddCombo.getText() + "', "
+                + "estatus = '" + (String) estatusClienteAddCombo.getSelectionModel().getSelectedItem() + "' WHERE cedula_cliente = '"
+                + cedulaCodigoClienteAddField.getText()+"' ";
+
+        Alert alert;
+        conexion = conexionBdd.conexion();
+
+        try{
+            if (cedulaCodigoClienteAddField.getText().isEmpty() || nombreClienteAddField.getText().isEmpty() || apellidoClienteAddField.getText().isEmpty()
+                    || telefonoClienteAddField.getText().isEmpty() || direccionClienteAddField.getText().isEmpty() || sexoClienteAddCombo.getSelectionModel().getSelectedItem() == null
+                    || estatusClienteAddCombo.getSelectionModel().getSelectedItem() == null){camposVacios();}else{
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Mensaje de confirmacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Estas seguro que deseas ACTUALIZAR los datos del cliente: " + cedulaCodigoClienteAddField.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get().equals(ButtonType.OK)){
+                    prepare = conexion.prepareStatement(sql);
+
+                    prepare.executeUpdate();
+
+                    alert = new Alert (Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro actualizado exitosamente!");
+                    alert.showAndWait();
+                    //actualizar datos
+                    miembrosMostrarDatos();
+                    //limpiar datos
+                    clientesLimpiarDatos();
+                }else{
+                    alert= new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro cancelado!");
+                    alert.showAndWait();
+                }
+
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
+    public void clientesEliminarBoton(){
+        String sql = "DELETE FROM clientes WHERE cedula_cliente = '"+cedulaCodigoClienteAddField.getText()+"'";
+
+        Alert alert;
+        conexion = conexionBdd.conexion();
+
+        try{
+            if (cedulaCodigoClienteAddField.getText().isEmpty() || nombreClienteAddField.getText().isEmpty() || apellidoClienteAddField.getText().isEmpty()
+                    || telefonoClienteAddField.getText().isEmpty() || direccionClienteAddField.getText().isEmpty() || sexoClienteAddCombo.getSelectionModel().getSelectedItem() == null
+                    || estatusClienteAddCombo.getSelectionModel().getSelectedItem() == null){camposVacios();}else{
+
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Mensaje de confirmacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Estas seguro que deseas ELIMINAR los datos del cliente: " + cedulaCodigoClienteAddField.getText() + "?");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get().equals(ButtonType.OK)){
+                    prepare = conexion.prepareStatement(sql);
+
+                    prepare.executeUpdate();
+
+                    alert = new Alert (Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro eliminado exitosamente!");
+                    alert.showAndWait();
+                    //actualizar datos
+                    miembrosMostrarDatos();
+                    //limpiar datos
+                    clientesLimpiarDatos();
+                }else{
+                    alert= new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Registro cancelado!");
+                    alert.showAndWait();
+                }
+
+            }
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+
     public void mostrarNombreUsuario(){
         String usuario = data.usuario;
         usuario = usuario.substring(0, 1).toUpperCase() + usuario.substring(1);
