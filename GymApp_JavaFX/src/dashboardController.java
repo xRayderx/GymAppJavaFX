@@ -10,6 +10,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.AreaChart;
@@ -1021,6 +1023,85 @@ public class dashboardController {
         double monto = doubleDesdeString(montoPagoBtn.getText());
         String resultado = "" + tasa_bcv * monto + " Bs";
         totalPagoLbl.setText(resultado);
+    }
+
+    //crear nuevo recibo
+    public void nuevoReciboBtn(){
+        Date fecha_venc = ObtenerFecha();
+        try {
+            Alert alert;
+            String valorBase = "0,00 Bs.";
+            if (pagoCedulaCampo.getText().isEmpty() || pagoCedulaLetra.getSelectionModel().getSelectedItem() == null || ObtenerFecha() == null
+                    || pagoMetodoCombo.getSelectionModel().getSelectedItem() == null || montoPagoBtn.getText().isEmpty()
+                    || bcvCheckLbl.getText().getBytes() == valorBase.getBytes() || totalPagoLbl.getText().equals(valorBase))
+            {camposVacios();}else{
+                String cedula_cliente = (String) pagoCedulaLetra.getSelectionModel().getSelectedItem() + pagoCedulaCampo.getText();
+                java.sql.Date fecha_inicio_pago = new java.sql.Date(System.currentTimeMillis());
+                java.sql.Date fecha_vencimiento = new java.sql.Date(fecha_venc.getTime());
+                String metodo_pago = (String) pagoMetodoCombo.getSelectionModel().getSelectedItem();
+
+                double tasa_bcv = doubleDesdeString(bcvCheckLbl.getText());
+                double monto = doubleDesdeString(montoPagoBtn.getText());
+                double total = doubleDesdeString(totalPagoLbl.getText());
+
+                alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Mensaje de confirmacion");
+                alert.setHeaderText(null);
+                alert.setContentText("Estas a punto de imprimir un recibo al cliente: " + (String) pagoCedulaLetra.getSelectionModel().getSelectedItem() + pagoCedulaCampo.getText() + "");
+                Optional<ButtonType> option = alert.showAndWait();
+                if (option.get().equals(ButtonType.OK)){
+                    recibo.cedula_cliente = cedula_cliente;
+                    recibo.fecha_inicio_pago = fecha_inicio_pago;
+                    recibo.fecha_vencimiento = fecha_vencimiento;
+                    recibo.metodo_pago = metodo_pago;
+                    recibo.tasa_bcv = tasa_bcv;
+                    recibo.monto = monto;
+                    recibo.total = total;
+                    alert = new Alert (Alert.AlertType.INFORMATION);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Recibo generado exitosamente!");
+                    alert.showAndWait();
+                    try {
+                        //llamado al controlador y al archivo recibo fxml inicializar Node y PrinterJob
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("recibo.fxml"));
+                        Parent root = loader.load();
+                        reciboController reciboController = loader.getController();
+                        Stage stage = new Stage();
+                        Scene scene = new Scene(root);
+                        stage.setScene(scene);
+                        stage.show();
+                        Node reciboNode = scene.getRoot();
+
+                        // Crear una nueva PrinterJob
+                        PrinterJob printerJob = PrinterJob.createPrinterJob();
+                        if (printerJob != null) {
+                            // Mostrar el diálogo de impresión y obtener si el usuario lo acepta
+                            boolean imprimir = printerJob.showPrintDialog(stage);
+                            if (imprimir) {
+                                // Imprimir el contenido
+                                printerJob.printPage(reciboNode);
+                                printerJob.endJob();
+                            }
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    alert= new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Mensaje de informacion");
+                    alert.setHeaderText(null);
+                    alert.setContentText("Impresion de recibo cancelada!");
+                    alert.showAndWait();
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void nuevoPagoBtn() {

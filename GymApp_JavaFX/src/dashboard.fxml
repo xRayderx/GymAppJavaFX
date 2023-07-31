@@ -460,7 +460,7 @@
                                     <Label layoutX="86.0" layoutY="363.0" text="TOTAL:" />
                                     <Label fx:id="totalPagoLbl" layoutX="142.0" layoutY="363.0" text="0,00 Bs." />
                                     <MFXButton fx:id="pagadoPagoBtn" layoutX="55.0" layoutY="392.0" onAction="#nuevoPagoBtn" prefHeight="50.0" prefWidth="75.0" style="-fx-border-color: #0d121a;" text="Pagado" />
-                                    <MFXButton fx:id="reciboPagoBtn" layoutX="143.0" layoutY="392.0" prefHeight="50.0" prefWidth="75.0" style="-fx-border-color: #0d121a;" text="Recibo" />
+                                    <MFXButton fx:id="reciboPagoBtn" layoutX="143.0" layoutY="392.0" onAction="#nuevoReciboBtn" prefHeight="50.0" prefWidth="75.0" style="-fx-border-color: #0d121a;" text="Recibo" />
                                     <MFXComboBox fx:id="pagoMetodoCombo" layoutX="111.0" layoutY="183.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="130.0" promptText="Seleccione..." style="-fx-border-color: #0d121a;" />
                                     <Label layoutX="27.0" layoutY="192.0" text="Método Pago:" />
                                     <Group />

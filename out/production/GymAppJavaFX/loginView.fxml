@@ -73,7 +73,7 @@
             </MFXButton>
             <ImageView fitHeight="264.0" fitWidth="276.0" layoutX="13.0" layoutY="-1.0" pickOnBounds="true">
                <image>
-                  <Image url="@assets/gymAppLogo.png" />
+                  <Image url="@assets/elDoro.png" />
                </image>
             </ImageView>
          </children>
