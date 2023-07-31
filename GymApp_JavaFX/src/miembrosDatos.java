@@ -19,8 +19,9 @@ public class miembrosDatos {
         this.sexo = sexo;
         this.estatus = estatus;
     }
+    public String getCedula_cliente(){return cedula_cliente;}
 
-    public String getCedula_cliente(){
+    public String getsoloCedula_cliente(){
         if (cedula_cliente != null && !cedula_cliente.isEmpty()) {
             // Regex bien bonito mi pana
             return cedula_cliente.replaceAll("[^0-9]", "");

@@ -124,6 +124,9 @@ public class dashboardController {
     private TableView<instructoresDatos> instructoresTablaVista;
 
     @FXML
+    private MFXLegacyTableView<miembrosJoin> joinClientesPagos;
+
+    @FXML
     private MFXButton editInstructorBtn;
 
     @FXML
@@ -343,11 +346,6 @@ public class dashboardController {
     private ResultSet resultado;
     private Statement statement;
 
-    @FXML
-    private void initialize(){
-        gruposRadio();
-    }
-
     private void gruposRadio() {
         ToggleGroup dias = new ToggleGroup();
         pagoDiaBtn.setToggleGroup(dias);
@@ -373,7 +371,6 @@ public class dashboardController {
             }
         });
     }
-
 
     public void numeroClientes(){
         String sql = "SELECT COUNT(cedula_cliente) AS total_clientes FROM public.clientes WHERE estatus='Activo'";
@@ -538,7 +535,7 @@ public class dashboardController {
                     alert.showAndWait();
                 }else{
                     prepare = conexion.prepareStatement(sql);
-                    prepare.setString(1, (String) pagoCedulaLetra.getSelectionModel().getSelectedItem() + cedulaInstructorAddField.getText());
+                    prepare.setString(1, (String) cedulaInstPrefCombo.getSelectionModel().getSelectedItem() + cedulaInstructorAddField.getText());
                     prepare.setString(2, nombreInstructorAddField.getText());
                     prepare.setString(3, apellidosInstructorAddField.getText());
                     prepare.setString(4, direccionInstructorAddField.getText());
@@ -738,7 +735,8 @@ public class dashboardController {
 
         if ((num - 1) < -1) return;
 
-        cedulaInstructorAddField.setText(id.getId_instructor());
+        cedulaInstructorAddField.setText(id.getsoloId_instructor());
+        cedulaInstPrefCombo.setText(id.getTipoCedula());
         nombreInstructorAddField.setText(id.getNombres());
         apellidosInstructorAddField.setText(id.getApellidos());
         direccionInstructorAddField.setText(id.getDireccion());
@@ -828,6 +826,51 @@ public class dashboardController {
 
         // Mostrar los datos en la tabla
         tablaPagosVista.setItems(datosPagos);
+    }
+
+    public ObservableList<miembrosJoin> obtenerJoin(){
+        ObservableList<miembrosJoin> joinDatos = FXCollections.observableArrayList();
+
+        String sql= "SELECT c.cedula_cliente, c.nombres, c.apellidos, c.telefono_movil, c.estatus, p.fecha_inicio_pago, p.fecha_vencimiento\n" +
+                    "FROM clientes c LEFT JOIN pagos p ON c.cedula_cliente = p.cedula_cliente ORDER BY c.cedula_cliente;";
+
+        conexion = conexionBdd.conexion();
+
+        try{
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            miembrosJoin mj;
+
+            while(resultado.next()){
+
+                mj = new miembrosJoin(resultado.getString("c.cedula_cliente"), resultado.getString("c.nombres"),
+                        resultado.getString("c.apellidos"), resultado.getString("c.telefono_movil"),
+                        resultado.getString("c.estatus"), resultado.getDate("p.fecha_inicio_pago"), resultado.getDate("p.fecha_vencimiento"));
+
+                joinDatos.add(mj);
+
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+        return joinDatos;
+    }
+    private ObservableList<miembrosJoin> miembrosJoinLista;
+    public void mostrarMiembrosJoinDatos(){
+        miembrosJoinLista = obtenerJoin();
+
+        cedulaClienteColPago.setCellValueFactory(new PropertyValueFactory<>("cedula_cliente"));
+        nombreClienteColPago.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        apellidos_inst_col.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        fechaClienteInicioColPago.setCellValueFactory(new PropertyValueFactory<>("fecha_inicio_pago"));
+        fechaClienteVencPago.setCellValueFactory(new PropertyValueFactory<>("fecha_vencimiento"));
+        telefonoClienteColPago.setCellValueFactory(new PropertyValueFactory<>("telefono_movil"));
+        estatusClienteColPago.setCellValueFactory(new PropertyValueFactory<>("estatus"));
+
+        joinClientesPagos.setItems(miembrosJoinLista);
     }
 
     public void obtenertasaBCV() {
@@ -1054,8 +1097,10 @@ public class dashboardController {
 
             prefCedula();
             mostrarPagosDatos();
+            mostrarMiembrosJoinDatos();
             mesesLista();
             metodoPago();
+
 
         }
 
@@ -1091,6 +1136,7 @@ public class dashboardController {
     public void miembrosMostrarDatos(){
         miembrosListaDatos = miembrosDatosLista();
 
+
         cedula_client_col.setCellValueFactory(new PropertyValueFactory<>("cedula_cliente"));
         nombres_client_col.setCellValueFactory(new PropertyValueFactory<>("nombres"));
         apellidos_client_col.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
@@ -1109,7 +1155,7 @@ public class dashboardController {
 
         if ((num -1) < -1 ) return;
         cedulaLetraClienteCombo.setText(md.getTipoCedula());
-        cedulaCodigoClienteAddField.setText(md.getCedula_cliente());
+        cedulaCodigoClienteAddField.setText(md.getsoloCedula_cliente());
         nombreClienteAddField.setText(md.getNombres());
         apellidoClienteAddField.setText(md.getApellidos());
         telefonoClienteAddField.setText(md.getTelefonoMovilRestante());

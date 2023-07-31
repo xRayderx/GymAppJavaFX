@@ -17,8 +17,13 @@ public class instructoresDatos {
         this.telefono_casa = telefono_casa;
         this.estatus = estatus;
     }
-    public String getId_instructor(){
-        return id_instructor;
+    public String getId_instructor(){return id_instructor;}
+    public String getsoloId_instructor(){
+        if (id_instructor != null && !id_instructor.isEmpty()) {
+            // Regex bien bonito mi pana
+            return id_instructor.replaceAll("[^0-9]", "");
+        }
+        return "";
     }
     public String getNombres(){
         return nombres;
@@ -64,4 +69,15 @@ public class instructoresDatos {
         }
         return "";
     }
+    public String getTipoCedula() {
+        if (id_instructor != null && !id_instructor.isEmpty()) {
+            char primerCaracter = id_instructor.charAt(0);
+            if (primerCaracter == 'V' || primerCaracter == 'E') {
+                return String.valueOf(primerCaracter);
+            }
+        }
+        return "";
+    }
 }
+
+
