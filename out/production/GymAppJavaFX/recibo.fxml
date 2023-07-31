@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="reciboGrid" alignment="CENTER" hgap="10" maxHeight="450" maxWidth="500" prefHeight="450.0" prefWidth="500.0" vgap="10" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="reciboController">
+<GridPane fx:id="reciboGrid" alignment="CENTER" hgap="10" maxHeight="450" maxWidth="500" prefHeight="450.0" prefWidth="500.0" style="-fx-background-color: #fff;" vgap="10" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="reciboController">
     <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="100.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="350" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" />
     </columnConstraints>
     <rowConstraints>
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -25,34 +26,62 @@
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
 
-    <Label text="RECIBO DE PAGO" GridPane.columnSpan="2" />
-    <Label fx:id="cedulaValue" text="" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-    <Label text="Número de Cédula" GridPane.rowIndex="3" />
-    <Label fx:id="fechaValue" text="" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-    <Label text="Fecha" GridPane.rowIndex="2" />
-    <Label fx:id="fechaVencValue" text="" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-
-    <Label text="Fecha Vencimiento Periodo" GridPane.rowIndex="5" />
-    <Label fx:id="metodoPagoValue" text="" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-
-    <Label text="Método de Pago" GridPane.rowIndex="6" />
-    <Label fx:id="tasaBCValue" text="" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-
-    <Label text="Tasa BCV" GridPane.rowIndex="8" />
-    <Label fx:id="montoValue" text="" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-
-    <Label text="Monto (USD)" GridPane.rowIndex="9" />
-    <Label fx:id="totalValue" text="" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-
-    <Label text="Total" GridPane.rowIndex="10" />
-    <Label text="RECUERDE PAGAR SU FACTURA " GridPane.columnIndex="1" GridPane.rowIndex="11">
+    <Label alignment="CENTER" prefHeight="34.0" prefWidth="151.0" text="RECIBO DE PAGO" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2">
       <font>
-         <Font size="10.0" />
+         <Font name="Arial Bold" size="13.0" />
       </font></Label>
-   <Label text="GIMNASIO EL DORO" GridPane.columnIndex="1" />
-   <Label text="J-21941032-8" GridPane.columnIndex="2" />
+    <Label fx:id="cedulaValue" prefHeight="30.0" prefWidth="156.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+
+    <Label prefHeight="44.0" prefWidth="150.0" text="Número de Cédula" GridPane.rowIndex="4">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font></Label>
+    <Label fx:id="fechaValue" prefHeight="30.0" prefWidth="149.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+
+    <Label prefHeight="42.0" prefWidth="150.0" text="Fecha" GridPane.rowIndex="3" />
+    <Label fx:id="fechaVencValue" prefHeight="30.0" prefWidth="158.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+
+    <Label prefHeight="30.0" prefWidth="160.0" text="Fecha Vencimiento Periodo" GridPane.rowIndex="6" />
+    <Label fx:id="metodoPagoValue" prefHeight="30.0" prefWidth="154.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="7" />
+
+    <Label prefHeight="30.0" prefWidth="150.0" text="Método de Pago" GridPane.rowIndex="7" />
+    <Label fx:id="tasaBCValue" prefHeight="30.0" prefWidth="196.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="9" />
+
+    <Label prefHeight="30.0" prefWidth="150.0" text="Tasa BCV" GridPane.rowIndex="9">
+      <font>
+         <Font name="Arial Bold" size="13.0" />
+      </font></Label>
+    <Label fx:id="montoValue" prefHeight="30.0" prefWidth="204.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="10" />
+
+    <Label prefHeight="31.0" prefWidth="150.0" text="Monto (USD)" GridPane.rowIndex="10">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font></Label>
+    <Label fx:id="totalValue" prefHeight="30.0" prefWidth="199.0" text="" GridPane.columnIndex="2" GridPane.rowIndex="11" />
+
+    <Label alignment="CENTER" prefHeight="31.0" prefWidth="150.0" text="Total" GridPane.rowIndex="11">
+      <font>
+         <Font name="Arial Black" size="14.0" />
+      </font></Label>
+    <Label alignment="CENTER" prefHeight="30.0" prefWidth="288.0" text="Gracias por su Compra" GridPane.columnIndex="1" GridPane.rowIndex="12">
+      <font>
+         <Font name="Arial Black" size="12.0" />
+      </font></Label>
+   <Label alignment="CENTER" prefHeight="16.0" prefWidth="151.0" text="GIMNASIO EL DORO" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <font>
+         <Font name="Arial" size="14.0" />
+      </font></Label>
+   <Label alignment="CENTER" prefHeight="18.0" prefWidth="158.0" text="RIF J-21941032-8" GridPane.columnIndex="1">
+      <font>
+         <Font name="Arial Black" size="12.0" />
+      </font></Label>
+   <Separator prefHeight="31.0" prefWidth="150.0" GridPane.rowIndex="5" />
+   <Separator prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+   <Separator prefHeight="30.0" prefWidth="150.0" GridPane.columnIndex="2" GridPane.rowIndex="5" />
+   <Separator prefHeight="34.0" prefWidth="139.0" GridPane.rowIndex="8" />
+   <Separator prefHeight="37.0" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+   <Separator prefHeight="41.0" prefWidth="214.0" GridPane.columnIndex="2" GridPane.rowIndex="8" />
 </GridPane>
