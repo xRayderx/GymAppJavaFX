@@ -82,6 +82,9 @@ public class dashboardController {
     private MFXTableColumn<?> cedulaTablaClienteCol;
 
     @FXML
+    private MFXComboBox<?> cedulaInstPrefCombo;
+
+    @FXML
     private TableColumn<instructoresDatos, String> cedula_inst_col;
 
     @FXML
@@ -119,6 +122,9 @@ public class dashboardController {
 
     @FXML
     private TableView<instructoresDatos> instructoresTablaVista;
+
+    @FXML
+    private MFXLegacyTableView<miembrosJoin> joinClientesPagos;
 
     @FXML
     private MFXButton editInstructorBtn;
@@ -253,7 +259,7 @@ public class dashboardController {
     private MFXRadioButton pagoMesBtn;
 
     @FXML
-    private MFXComboBox<Integer> pagoMesCombo;
+    private MFXComboBox<String> pagoMesCombo;
 
     @FXML
     private MFXComboBox<?> pagoMetodoCombo;
@@ -333,21 +339,47 @@ public class dashboardController {
     private TableColumn<miembrosDatos, String> sexo_client_col;
 
     @FXML
-    private TableColumn<miembrosDatos, Date> fechapago_client_col;
-
-    @FXML
-    private TableColumn<miembrosDatos, Date> fechavencimiento_client_col;
-
-    @FXML
     private TableColumn<miembrosDatos, String> estatus_client_col;
 
     @FXML
     private Label usuarioLabel;
 
+    @FXML
+    private void initialize(){
+        mostrarNombreUsuario();
+        gruposRadio();
+    }
+
     private PreparedStatement prepare;
     private Connection conexion;
     private ResultSet resultado;
     private Statement statement;
+
+    private void gruposRadio() {
+        ToggleGroup dias = new ToggleGroup();
+        pagoDiaBtn.setToggleGroup(dias);
+        pagoSemanaBtn.setToggleGroup(dias);
+        pagoMesBtn.setToggleGroup(dias);
+
+        final MFXComboBox<String>[] selectedComboBox = new MFXComboBox[]{null};
+
+        dias.selectedToggleProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue instanceof RadioButton) {
+                selectedComboBox[0] = null;
+                pagoMesCombo.setValue(null);
+                pagoMesCombo.setDisable(true);
+            } else if (newValue == null) {
+                pagoMesCombo.setDisable(false);
+            }
+        });
+
+        pagoMesCombo.setOnAction(event -> {
+            if (selectedComboBox[0] == null) {
+                selectedComboBox[0] = pagoMesCombo;
+                dias.selectToggle(null);
+            }
+        });
+    }
 
     public void numeroClientes(){
         String sql = "SELECT COUNT(cedula_cliente) AS total_clientes FROM public.clientes WHERE estatus='Activo'";
@@ -445,6 +477,7 @@ public class dashboardController {
 
             estadisticas.setName("X: Meses, Y: Cantidades");
 
+
             ingresoMensualChart.getData().add(estadisticas); // Agregar la serie al gráfico
 
         } catch (Exception e) {
@@ -511,7 +544,7 @@ public class dashboardController {
                     alert.showAndWait();
                 }else{
                     prepare = conexion.prepareStatement(sql);
-                    prepare.setString(1, cedulaInstructorAddField.getText());
+                    prepare.setString(1, (String) cedulaInstPrefCombo.getSelectionModel().getSelectedItem() + cedulaInstructorAddField.getText());
                     prepare.setString(2, nombreInstructorAddField.getText());
                     prepare.setString(3, apellidosInstructorAddField.getText());
                     prepare.setString(4, direccionInstructorAddField.getText());
@@ -691,6 +724,8 @@ public class dashboardController {
 
     }
     public void instructoresLimpiarDatos(){
+
+        cedulaInstPrefCombo.getSelectionModel().clearSelection();
         cedulaInstructorAddField.setText("");
         nombreInstructorAddField.setText("");
         apellidosInstructorAddField.setText("");
@@ -703,23 +738,23 @@ public class dashboardController {
         estatusInstructorAddCombo.getSelectionModel().clearSelection();
     }
 
-    public void instructoresSeleccion(){
+    public void instructoresSeleccion() {
         instructoresDatos id = instructoresTablaVista.getSelectionModel().getSelectedItem();
         int num = instructoresTablaVista.getSelectionModel().getSelectedIndex();
 
-        if ((num - 1) < -1 ) return;
+        if ((num - 1) < -1) return;
 
-        cedulaInstructorAddField.setText(id.getId_instructor());
+        cedulaInstructorAddField.setText(id.getsoloId_instructor());
+        cedulaInstPrefCombo.setText(id.getTipoCedula());
         nombreInstructorAddField.setText(id.getNombres());
         apellidosInstructorAddField.setText(id.getApellidos());
         direccionInstructorAddField.setText(id.getDireccion());
         sexoInstructorAddCombo.setText(id.getSexo());
-        telefonoMovilInstructorAddField.setText(id.getTelefono_movil());
-        //movilPrefijoInstCombo.getText();
-        telefonoCasaInstructorAddField.setText(id.getTelefono_casa());
-        //casaPrefijoInstCombo.getText();
+        telefonoMovilInstructorAddField.setText(id.getTelefonoMovilRestante());
+        movilPrefijoInstCombo.setText(id.getPrefijoMovil());
+        telefonoCasaInstructorAddField.setText(id.getTelefonoCasaRestante());
+        casaPrefijoInstCombo.setText(id.getPrefijoCasa());
         estatusInstructorAddCombo.setText(id.getEstatus());
-
     }
 
     private String sexo[] = {"Masculino", "Femenino", "Otro"};
@@ -802,6 +837,51 @@ public class dashboardController {
         tablaPagosVista.setItems(datosPagos);
     }
 
+    public ObservableList<miembrosJoin> obtenerJoin(){
+        ObservableList<miembrosJoin> joinDatos = FXCollections.observableArrayList();
+
+        String sql= "SELECT c.cedula_cliente, c.nombres, c.apellidos, c.telefono_movil, c.estatus, p.fecha_inicio_pago, p.fecha_vencimiento\n" +
+                    "FROM clientes c LEFT JOIN pagos p ON c.cedula_cliente = p.cedula_cliente ORDER BY c.cedula_cliente;";
+
+        conexion = conexionBdd.conexion();
+
+        try{
+            prepare = conexion.prepareStatement(sql);
+            resultado = prepare.executeQuery();
+
+            miembrosJoin mj;
+
+            while(resultado.next()){
+
+                mj = new miembrosJoin(resultado.getString("c.cedula_cliente"), resultado.getString("c.nombres"),
+                        resultado.getString("c.apellidos"), resultado.getString("c.telefono_movil"),
+                        resultado.getString("c.estatus"), resultado.getDate("p.fecha_inicio_pago"), resultado.getDate("p.fecha_vencimiento"));
+
+                joinDatos.add(mj);
+
+            }
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+        return joinDatos;
+    }
+    private ObservableList<miembrosJoin> miembrosJoinLista;
+    public void mostrarMiembrosJoinDatos(){
+        miembrosJoinLista = obtenerJoin();
+
+        cedulaClienteColPago.setCellValueFactory(new PropertyValueFactory<>("cedula_cliente"));
+        nombreClienteColPago.setCellValueFactory(new PropertyValueFactory<>("nombres"));
+        apellidos_inst_col.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
+        fechaClienteInicioColPago.setCellValueFactory(new PropertyValueFactory<>("fecha_inicio_pago"));
+        fechaClienteVencPago.setCellValueFactory(new PropertyValueFactory<>("fecha_vencimiento"));
+        telefonoClienteColPago.setCellValueFactory(new PropertyValueFactory<>("telefono_movil"));
+        estatusClienteColPago.setCellValueFactory(new PropertyValueFactory<>("estatus"));
+
+        joinClientesPagos.setItems(miembrosJoinLista);
+    }
+
     public void obtenertasaBCV() {
         String url = "https://api.exchangedyn.com/markets/quotes/usdves/bcv";
         String tasaBCV = null;
@@ -843,6 +923,8 @@ public class dashboardController {
 
         ObservableList cedList = FXCollections.observableArrayList(cedulaLista);
         pagoCedulaLetra.setItems(cedList);
+        cedulaLetraClienteCombo.setItems(cedList);
+        cedulaInstPrefCombo.setItems(cedList);
     }
     private String metodo[] = {"Pago movil", "Efectivo", "Punto de venta", "Otro"};
     public void metodoPago(){
@@ -856,13 +938,13 @@ public class dashboardController {
         pagoMetodoCombo.setItems(cedList);
     }
     public void mesesLista() {
-        List<Integer> mesesLista = new ArrayList<>();
+        List<String> mesesLista = new ArrayList<>();
 
         for (int i = 1; i <= 12; i++) {
-            mesesLista.add(i);
+            mesesLista.add(Integer.toString(i));
         }
 
-        ObservableList<Integer> mesesObservableList = FXCollections.observableArrayList(mesesLista);
+        ObservableList<String> mesesObservableList = FXCollections.observableArrayList(mesesLista);
         pagoMesCombo.setItems(mesesObservableList);
     }
     public Date ObtenerFecha() {
@@ -905,23 +987,22 @@ public class dashboardController {
 
     public void nuevoPagoBtn() {
         String sql = "INSERT INTO public.pagos (cedula_cliente, fecha_inicio_pago, fecha_vencimiento, metodo_pago, tasa_bcv, monto, total) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
         conexion= conexionBdd.conexion();
         Date fecha_venc = ObtenerFecha();
-
-        double tasa_bcv = doubleDesdeString(bcvCheckLbl.getText());
-        double monto = doubleDesdeString(montoPagoBtn.getText());
-        double total = doubleDesdeString(totalPagoLbl.getText());
-
         try {
             Alert alert;
+            String valorBase = "0,00 Bs.";
             if (pagoCedulaCampo.getText().isEmpty() || pagoCedulaLetra.getSelectionModel().getSelectedItem() == null || ObtenerFecha() == null
-                || pagoMetodoCombo.getSelectionModel().getSelectedItem() == null || montoPagoBtn.getText().isEmpty())
-            {camposVacios();}else{
+                || pagoMetodoCombo.getSelectionModel().getSelectedItem() == null || montoPagoBtn.getText().isEmpty() || !bcvCheckLbl.getText().equals(valorBase) || !totalPagoLbl.getText().equals(valorBase))
+                {camposVacios();}else{
                 String cedula_cliente = (String) pagoCedulaLetra.getSelectionModel().getSelectedItem() + pagoCedulaCampo.getText();
                 java.sql.Date fecha_inicio_pago = new java.sql.Date(System.currentTimeMillis());
                 java.sql.Date fecha_vencimiento = new java.sql.Date(fecha_venc.getTime());
                 String metodo_pago = (String) pagoMetodoCombo.getSelectionModel().getSelectedItem();
+
+                double tasa_bcv = doubleDesdeString(bcvCheckLbl.getText());
+                double monto = doubleDesdeString(montoPagoBtn.getText());
+                double total = doubleDesdeString(totalPagoLbl.getText());
 
                 alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Mensaje de confirmacion");
@@ -976,7 +1057,7 @@ public class dashboardController {
     public void pagosEliminarPago(){
 
     }
-
+    //cambiar formularios
     public void cambiarForm(ActionEvent event) {
 
         if (event.getSource() == mainDashboardBtn) {
@@ -1013,7 +1094,7 @@ public class dashboardController {
             pagoForm.setVisible(false);
 
             instructorSexoLista();
-            //membersSchedule();
+            miembrosMostrarDatos();
             estatusCliente();
 
         } else if (event.getSource() == mainPagosBtn) {
@@ -1025,13 +1106,14 @@ public class dashboardController {
 
             prefCedula();
             mostrarPagosDatos();
+            mostrarMiembrosJoinDatos();
             mesesLista();
             metodoPago();
+
 
         }
 
     }
-
     //Formulario Clientes
     public ObservableList<miembrosDatos> miembrosDatosLista(){
         ObservableList<miembrosDatos> miemDatos = FXCollections.observableArrayList();
@@ -1043,14 +1125,13 @@ public class dashboardController {
             prepare = conexion.prepareStatement(sql);
             resultado = prepare.executeQuery();
 
-            miembrosDatos cedulaCliente;
+            miembrosDatos cedula_cliente;
 
             while(resultado.next()){
-                cedulaCliente = new miembrosDatos(resultado.getString("cedulaCliente"), resultado.getString("nombres"),
-                        resultado.getString("apellidos"), resultado.getString("telefono"),
-                        resultado.getString("direccion"), resultado.getDate("fechaPago"),
-                        resultado.getDate("fechaVencimiento"), resultado.getString("sexo"), resultado.getString("estatus"));
-                miemDatos.add(cedulaCliente);
+                cedula_cliente = new miembrosDatos(resultado.getString("cedula_cliente"), resultado.getString("nombres"),
+                        resultado.getString("apellidos"), resultado.getString("telefono_movil"),
+                        resultado.getString("direccion"), resultado.getString("sexo"), resultado.getString("estatus"));
+                miemDatos.add(cedula_cliente);
             }
 
         }catch(Exception e){
@@ -1064,30 +1145,43 @@ public class dashboardController {
     public void miembrosMostrarDatos(){
         miembrosListaDatos = miembrosDatosLista();
 
-        cedula_client_col.setCellValueFactory(new PropertyValueFactory<>("cedulaCliente"));
+
+        cedula_client_col.setCellValueFactory(new PropertyValueFactory<>("cedula_cliente"));
         nombres_client_col.setCellValueFactory(new PropertyValueFactory<>("nombres"));
         apellidos_client_col.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
-        telefono_client_col.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        telefono_client_col.setCellValueFactory(new PropertyValueFactory<>("telefono_movil"));
         direccion_client_col.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        fechapago_client_col.setCellValueFactory(new PropertyValueFactory<>("fechaPago"));
-        fechavencimiento_client_col.setCellValueFactory(new PropertyValueFactory<>("fechaVencimiento"));
         sexo_client_col.setCellValueFactory(new PropertyValueFactory<>("sexo"));
         estatus_client_col.setCellValueFactory(new PropertyValueFactory<>("estatus"));
 
         miembrosTablaVista.setItems(miembrosListaDatos);
 
     }
+    public void clientesSeleccion(){
+
+        miembrosDatos md = miembrosTablaVista.getSelectionModel().getSelectedItem();
+        int num = miembrosTablaVista.getSelectionModel().getSelectedIndex();
+
+        if ((num -1) < -1 ) return;
+        cedulaLetraClienteCombo.setText(md.getTipoCedula());
+        cedulaCodigoClienteAddField.setText(md.getsoloCedula_cliente());
+        nombreClienteAddField.setText(md.getNombres());
+        apellidoClienteAddField.setText(md.getApellidos());
+        telefonoClienteAddField.setText(md.getTelefonoMovilRestante());
+        direccionClienteAddField.setText(md.getDireccion());
+        sexoClienteAddCombo.setText(md.getSexo());
+        estatusClienteAddCombo.setText(md.getEstatus());
+
+    }
 
     //limpiar los campos
     public void clientesLimpiarDatos(){
-        //cedulaLetraClienteCombo.getSelectionModel().clearSelection();
+        cedulaLetraClienteCombo.getSelectionModel().clearSelection();
         cedulaCodigoClienteAddField.setText("");
         nombreClienteAddField.setText("");
         apellidoClienteAddField.setText("");
         telefonoClienteAddField.setText("");
         direccionClienteAddField.setText("");
-        fechaInicioClienteAddDate.setValue(null);
-        fechaVencClienteAddDate.setValue(null);
         sexoClienteAddCombo.getSelectionModel().clearSelection();
         estatusClienteAddCombo.getSelectionModel().clearSelection();
     }
@@ -1123,13 +1217,11 @@ public class dashboardController {
                     alert.showAndWait();
                 } else {
                     prepare = conexion.prepareStatement(sql);
-                    prepare.setString(1, cedulaCodigoClienteAddField.getText());
+                    prepare.setString(1, (String) cedulaLetraClienteCombo.getSelectionModel().getSelectedItem() +cedulaCodigoClienteAddField.getText());
                     prepare.setString(2, nombreClienteAddField.getText());
                     prepare.setString(3, apellidoClienteAddField.getText());
                     prepare.setString(4, telefonoClienteAddField.getText());
                     prepare.setString(5, direccionClienteAddField.getText());
-                    //prepare.setString(6, fechaInicioClienteAddDate.getText());
-                    //prepare.setString(7, fechaVencClienteAddDate.getText());
                     prepare.setString(6, sexoClienteAddCombo.getText());
                     prepare.setString(7, (String) estatusClienteAddCombo.getSelectionModel().getSelectedItem());
 

@@ -2,7 +2,6 @@
 
 <?import io.github.palexdev.materialfx.controls.MFXButton?>
 <?import io.github.palexdev.materialfx.controls.MFXComboBox?>
-<?import io.github.palexdev.materialfx.controls.MFXDatePicker?>
 <?import io.github.palexdev.materialfx.controls.MFXRadioButton?>
 <?import io.github.palexdev.materialfx.controls.MFXTextField?>
 <?import io.github.palexdev.materialfx.controls.legacy.MFXLegacyTableView?>
@@ -186,12 +185,12 @@
                               </AnchorPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="mainInstructorForm" layoutX="45.0" layoutY="33.0" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="527.0" prefWidth="275.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
                                  <children>
-                                    <MFXTextField fx:id="cedulaInstructorAddField" layoutX="124.0" layoutY="27.0" minHeight="35.0" minWidth="80.0" prefHeight="35.0" prefWidth="130.0" promptText="Ingrese..." />
-                                    <Label layoutX="21.0" layoutY="35.0" style="-fx-text-fill: #e6f1ff;" text="ID de Instructor: ">
+                                    <MFXTextField fx:id="cedulaInstructorAddField" layoutX="138.0" layoutY="27.0" minHeight="35.0" minWidth="80.0" prefHeight="35.0" prefWidth="120.0" promptText="Ingrese..." />
+                                    <Label layoutX="9.0" layoutY="37.0" style="-fx-text-fill: #e6f1ff;" text="Cedula:">
                                        <font>
                                           <Font name="Arial Bold" size="13.0" />
                                        </font>
@@ -264,6 +263,7 @@
                                        </font>
                                     </Label>
                                     <MFXTextField fx:id="direccionInstructorAddField" floatingText="Ingrese..." layoutX="85.0" layoutY="159.0" prefHeight="61.0" prefWidth="170.0" />
+                                    <MFXComboBox fx:id="cedulaInstPrefCombo" layoutX="62.0" layoutY="27.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="60.0" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="321.0" layoutY="14.0" prefHeight="527.0" prefWidth="547.0" style="-fx-background-color: #00459d; -fx-border-color: #e6f1ff;">
@@ -285,7 +285,7 @@
                               <Separator layoutX="302.0" layoutY="14.0" orientation="VERTICAL" prefHeight="527.0" prefWidth="9.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="clienteForm" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="clienteForm" prefHeight="555.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="13.0" layoutY="14.0" prefHeight="200.0" prefWidth="855.0" style="-fx-background-color: #e6f1ff;">
                                  <children>
@@ -319,23 +319,13 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="362.0" layoutY="45.0" text="Direccion:">
+                                    <Label layoutX="348.0" layoutY="45.0" text="Direccion:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="346.0" layoutY="119.0" prefHeight="20.0" prefWidth="81.0" text="Fecha pago:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <Label layoutX="303.0" layoutY="161.0" text="Fecha vencimiento:">
-                                       <font>
-                                          <Font size="14.0" />
-                                       </font>
-                                    </Label>
-                                    <TextArea fx:id="direccionClienteAddField" layoutX="428.0" layoutY="23.0" prefHeight="80.0" prefWidth="300.0" promptText="Ingrese..." style="-fx-border-color: #0d121a;" />
-                                    <Label layoutX="623.0" layoutY="119.0" prefHeight="20.0" prefWidth="41.0" text="Sexo:">
+                                    <TextArea fx:id="direccionClienteAddField" layoutX="415.0" layoutY="21.0" prefHeight="80.0" prefWidth="300.0" promptText="Ingrese..." style="-fx-border-color: #0d121a;" />
+                                    <Label layoutX="348.0" layoutY="120.0" prefHeight="20.0" prefWidth="41.0" text="Sexo:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -345,34 +335,30 @@
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="609.0" layoutY="162.0" prefHeight="20.0" prefWidth="109.0" text="Estatus:">
+                                    <Label layoutX="348.0" layoutY="162.0" prefHeight="20.0" prefWidth="109.0" text="Estatus:">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
                                     </Label>
-                                    <MFXComboBox fx:id="sexoClienteAddCombo" layoutX="661.0" layoutY="111.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" promptText="Seleccione..." style="-fx-border-color: #0d121a;" />
-                                    <MFXComboBox fx:id="estatusClienteAddCombo" layoutX="661.0" layoutY="154.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" promptText="Seleccione..." style="-fx-border-color: #0d121a;" />
-                                    <MFXDatePicker fx:id="fechaVencClienteAddDate" layoutX="427.0" layoutY="152.0" prefHeight="38.0" prefWidth="170.0" style="-fx-border-color: #0d121a;" />
-                                    <MFXDatePicker fx:id="fechaInicioClienteAddDate" layoutX="427.0" layoutY="110.0" prefHeight="38.0" prefWidth="170.0" style="-fx-border-color: #0d121a;" />
-                                    <MFXButton fx:id="deleteClienteBtn" layoutX="799.0" layoutY="21.0" prefHeight="40.0" prefWidth="45.0" style="-fx-border-color: #0d121a;" text="del" />
-                                    <MFXButton fx:id="limpiarCamposClienteBtn" layoutX="799.0" layoutY="65.0" onAction="#clientesLimpiarDatos" prefHeight="40.0" prefWidth="45.0" style="-fx-border-color: #0d121a;" text="lim" />
-                                    <MFXButton fx:id="nuevoClienteAddBtn" layoutX="738.0" layoutY="21.0" onAction="#clientesNuevoBoton" prefHeight="40.0" prefWidth="45.0" style="-fx-border-color: #0d121a;" text="+" />
-                                    <MFXButton fx:id="editClienteBtn" layoutX="738.0" layoutY="65.0" prefHeight="40.0" prefWidth="45.0" style="-fx-border-color: #0d121a;" text="act" />
+                                    <MFXComboBox fx:id="sexoClienteAddCombo" layoutX="400.0" layoutY="112.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" promptText="Seleccione..." style="-fx-border-color: #0d121a;" />
+                                    <MFXComboBox fx:id="estatusClienteAddCombo" layoutX="400.0" layoutY="154.0" minHeight="35.0" minWidth="60.0" prefHeight="35.0" prefWidth="138.0" promptText="Seleccione..." style="-fx-border-color: #0d121a;" />
+                                    <MFXButton fx:id="deleteClienteBtn" layoutX="733.0" layoutY="109.0" prefHeight="40.0" prefWidth="100.0" style="-fx-border-color: #0d121a;" text="del" />
+                                    <MFXButton fx:id="limpiarCamposClienteBtn" layoutX="733.0" layoutY="153.0" onAction="#clientesLimpiarDatos" prefHeight="40.0" prefWidth="100.0" style="-fx-border-color: #0d121a;" text="lim" />
+                                    <MFXButton fx:id="nuevoClienteAddBtn" layoutX="627.0" layoutY="109.0" onAction="#clientesNuevoBoton" prefHeight="40.0" prefWidth="100.0" style="-fx-border-color: #0d121a;" text="+" />
+                                    <MFXButton fx:id="editClienteBtn" layoutX="627.0" layoutY="153.0" prefHeight="40.0" prefWidth="100.0" style="-fx-border-color: #0d121a;" text="act" />
                                  </children>
                               </AnchorPane>
                               <AnchorPane layoutX="14.0" layoutY="241.0" prefHeight="300.0" prefWidth="855.0" style="-fx-background-color: #fff;">
                                  <children>
-                                    <TableView fx:id="miembrosTablaVista" layoutX="-1.0" layoutY="-2.0" prefHeight="302.0" prefWidth="858.0">
+                                    <TableView fx:id="miembrosTablaVista" layoutX="-1.0" layoutY="-2.0" onMouseClicked="#clientesSeleccion" prefHeight="302.0" prefWidth="858.0">
                                       <columns>
-                                        <TableColumn fx:id="cedula_client_col" prefWidth="75.0" text="Cédula" />
-                                        <TableColumn fx:id="nombres_client_col" prefWidth="98.39999389648438" text="Nombres" />
-                                          <TableColumn fx:id="apellidos_client_col" prefWidth="99.99998474121094" text="Apellidos" />
-                                          <TableColumn fx:id="telefono_client_col" prefWidth="98.4000244140625" text="Teléfono" />
-                                          <TableColumn fx:id="direccion_client_col" prefWidth="152.79998779296875" text="Dirección" />
-                                          <TableColumn fx:id="sexo_client_col" prefWidth="51.199951171875" text="Sexo" />
-                                          <TableColumn fx:id="fechapago_client_col" prefWidth="96.800048828125" text="F. Pago" />
-                                          <TableColumn fx:id="fechavencimiento_client_col" prefWidth="106.4000244140625" text="F. Vencimiento" />
-                                          <TableColumn fx:id="estatus_client_col" prefWidth="81.60003662109375" text="Estatus" />
+                                        <TableColumn fx:id="cedula_client_col" prefWidth="82.0" text="Cédula" />
+                                        <TableColumn fx:id="nombres_client_col" prefWidth="148.0" text="Nombres" />
+                                          <TableColumn fx:id="apellidos_client_col" prefWidth="151.0" text="Apellidos" />
+                                          <TableColumn fx:id="telefono_client_col" text="Teléfono" />
+                                          <TableColumn fx:id="direccion_client_col" prefWidth="237.0" text="Dirección" />
+                                          <TableColumn fx:id="sexo_client_col" prefWidth="77.0" text="Sexo" />
+                                          <TableColumn fx:id="estatus_client_col" prefWidth="82.0" text="Estatus" />
                                       </columns>
                                     </TableView>
                                  </children>
@@ -380,7 +366,7 @@
                               <Separator layoutX="14.0" layoutY="227.0" prefHeight="0.0" prefWidth="856.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <AnchorPane fx:id="pagoForm" layoutX="130.0" layoutY="76.0" prefHeight="551.0" prefWidth="881.0" style="-fx-background-color: #0d121a;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <AnchorPane layoutX="595.0" layoutY="13.0" prefHeight="523.0" prefWidth="275.0" style="-fx-background-color: #e6f1ff;">
                                  <children>

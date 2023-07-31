@@ -17,8 +17,13 @@ public class instructoresDatos {
         this.telefono_casa = telefono_casa;
         this.estatus = estatus;
     }
-    public String getId_instructor(){
-        return id_instructor;
+    public String getId_instructor(){return id_instructor;}
+    public String getsoloId_instructor(){
+        if (id_instructor != null && !id_instructor.isEmpty()) {
+            // Regex bien bonito mi pana
+            return id_instructor.replaceAll("[^0-9]", "");
+        }
+        return "";
     }
     public String getNombres(){
         return nombres;
@@ -35,11 +40,44 @@ public class instructoresDatos {
     public String getTelefono_movil(){
         return telefono_movil;
     }
-    public String getTelefono_casa(){
-        return telefono_casa;
-    }
+    public String getTelefono_casa(){return telefono_casa;}
     public String getEstatus(){
         return estatus;
     }
+    public String getPrefijoMovil() {
+        if (telefono_movil != null && telefono_movil.length() >= 4) {
+            return telefono_movil.substring(0, 4);
+        }
+        return "";
+    }
 
+    public String getPrefijoCasa() {
+        if (telefono_casa != null && telefono_casa.length() >= 4) {
+            return telefono_casa.substring(0, 4);
+        }
+        return "";
+    }
+    public String getTelefonoMovilRestante() {
+        if (telefono_movil != null && telefono_movil.length() >= 11) {
+            return telefono_movil.substring(4);
+        }
+        return "";
+    }
+    public String getTelefonoCasaRestante() {
+        if (telefono_casa != null && telefono_casa.length() >= 11) {
+            return telefono_casa.substring(4);
+        }
+        return "";
+    }
+    public String getTipoCedula() {
+        if (id_instructor != null && !id_instructor.isEmpty()) {
+            char primerCaracter = id_instructor.charAt(0);
+            if (primerCaracter == 'V' || primerCaracter == 'E') {
+                return String.valueOf(primerCaracter);
+            }
+        }
+        return "";
+    }
 }
+
+
