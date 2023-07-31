@@ -18,6 +18,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import java.security.MessageDigest;
+import java.util.Base64;
+
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.util.Duration;
@@ -75,12 +78,12 @@ public class AppController {
 
     public void login() {
         conexion = conexionBdd.conexion();
-        String sql = "SELECT * FROM public.usuarios WHERE usuarios.usuario = (?) and usuarios.clave = (?)";
+        String sql = "SELECT * FROM public.usuarios WHERE usuarios.usuario = ?";
         try {
 
             prepare = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             prepare.setString(1, si_usuario.getText());
-            prepare.setString(2, si_pass.getText());
+            //prepare.setString(2, si_pass.getText());
             resultado = prepare.executeQuery();
 
             Alert alerta;
@@ -94,37 +97,53 @@ public class AppController {
 
             }else{
                 if(resultado.next()){
-                    alerta = new Alert(Alert.AlertType.INFORMATION);
-                    alerta.setTitle("Mensaje de informacion");
-                    alerta.setHeaderText(null);
-                    alerta.setContentText("Inicio de sesion exitosa");
-                    alerta.showAndWait();
 
-                    si_loginBtn.getScene().getWindow().hide();
+                    //usuario encontrado, obtenemos el hash almacenado en la BD
+                    String hashAlmacenado = resultado.getString("clave");
 
-                    Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+                    //Encriptar la contraseña ingresada para compararla con el hash almacenado
+                    String contrasenaIngresadaEncriptada = encriptarSHA256(si_pass.getText());
 
-                    Stage stage = new Stage();
-                    Scene scene = new Scene(root);
+                    //comparamos
+                    if(hashAlmacenado.equals(contrasenaIngresadaEncriptada)){
 
-                    stage.initStyle(StageStyle.TRANSPARENT);
+                        data.usuario = si_usuario.getText();
 
-                    stage.setScene(scene);
-                    stage.show();
+                        alerta = new Alert(Alert.AlertType.INFORMATION);
+                        alerta.setTitle("Mensaje de informacion");
+                        alerta.setHeaderText(null);
+                        alerta.setContentText("Inicio de sesion exitoso");
+                        alerta.showAndWait();
 
+                        si_loginBtn.getScene().getWindow().hide();
+
+                        Parent root = FXMLLoader.load(getClass().getResource("dashboard.fxml"));
+
+                        Stage stage = new Stage();
+                        Scene scene = new Scene(root);
+
+                        stage.initStyle(StageStyle.TRANSPARENT);
+
+                        stage.setScene(scene);
+                        stage.show();
+                    }else {
+                        alerta = new Alert(Alert.AlertType.ERROR);
+                        alerta.setTitle("Error inesperado");
+                        alerta.setHeaderText(null);
+                        alerta.setContentText("Usuario y contraseña incorrectos");
+                        alerta.showAndWait();
+                    }
                 }else{
                     alerta = new Alert(Alert.AlertType.ERROR);
                     alerta.setTitle("Error inesperado");
                     alerta.setHeaderText(null);
-                    alerta.setContentText("Usuario y contraseña incorrectos");
+                    alerta.setContentText("No se encontró el usuario");
                     alerta.showAndWait();
                 }
-
             }
         } catch (Exception e) {
             System.out.println(e);
         }
-
     }
 
     public void registro(){
@@ -143,25 +162,28 @@ public class AppController {
                 alerta.setContentText("Porfavor, llena todos los campos");
                 alerta.showAndWait();
             } else{
-                if(re_clave.getText().length()<8){
+                if(!re_clave.getText().matches("^[a-zA-Z0-9]{8,}$")){
                     alerta = new Alert(Alert.AlertType.ERROR);
                     alerta.setTitle("Error inesperado");
                     alerta.setHeaderText(null);
-                    alerta.setContentText("Porfavor, ingresa una contraseña de 8 o mas caracteres");
+                    alerta.setContentText("Por favor, ingresa una contraseña de 8 o más caracteres que contenga solo letras y números");
                     alerta.showAndWait();
                 }else{
+                    //encriptamos la contraseña con el algoritmo SHA-256
+                    String contrasenaEncriptada = encriptarSHA256(re_clave.getText());
+
                     prepare = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                     prepare.setString(1,re_usuario.getText());
                     prepare.setString(2, re_correo.getText());
-                    prepare.setString(3, re_clave.getText());
+                    prepare.setString(3, contrasenaEncriptada);
 
                     prepare.executeUpdate();
 
 
                     alerta = new Alert(Alert.AlertType.INFORMATION);
-                    alerta.setTitle("Mensaje de informacion");
+                    alerta.setTitle("Exito");
                     alerta.setHeaderText(null);
-                    alerta.setContentText("Usuario registrado");
+                    alerta.setContentText("Usuario registrado exitosamente");
                     alerta.showAndWait();
 
 
@@ -174,6 +196,20 @@ public class AppController {
             System.out.println(e);
         }
 
+    }
+
+    public String encriptarSHA256(String texto){
+        try{
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(texto.getBytes("UTF-8"));
+
+            //convertir el hash byte a una cadena en formato base64 para
+            //almacenarla en la base de datos
+            return Base64.getEncoder().encodeToString(hash);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void registroSlider(){

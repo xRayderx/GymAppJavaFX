@@ -341,6 +341,9 @@ public class dashboardController {
     @FXML
     private TableColumn<miembrosDatos, String> estatus_client_col;
 
+    @FXML
+    private Label usuarioLabel;
+
     private PreparedStatement prepare;
     private Connection conexion;
     private ResultSet resultado;
@@ -1146,6 +1149,13 @@ public class dashboardController {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public void mostrarNombreUsuario(){
+        String usuario = data.usuario;
+        usuario = usuario.substring(0, 1).toUpperCase() + usuario.substring(1);
+
+        usuarioLabel.setText(usuario);
     }
 
     public void minimizar(){
