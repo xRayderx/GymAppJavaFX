@@ -1175,9 +1175,8 @@ public class dashboardController {
     }
 
     public void pagosEliminarPago(){
-        pagosDatos pd = tablaPagosVista.getSelectionModel().getSelectedItem();
-        int num = tablaPagosVista.getSelectionModel().getSelectedIndex() + 1;
-        String sql = "DELETE FROM pagos WHERE id_pago = '"+num+"'";
+        int pd = tablaPagosVista.getSelectionModel().getSelectedItem().getId_pago();
+        String sql = "DELETE FROM pagos WHERE id_pago = '"+pd+"'";
         Alert alert;
         conexion = conexionBdd.conexion();
 
@@ -1185,7 +1184,7 @@ public class dashboardController {
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Mensaje de confirmacion");
             alert.setHeaderText(null);
-            alert.setContentText("Estas seguro que deseas ELIMINAR el pago id:" + num + "?");
+            alert.setContentText("Estas seguro que deseas ELIMINAR el pago id:" + pd + "?");
             Optional<ButtonType> option = alert.showAndWait();
             if (option.get().equals(ButtonType.OK)){
                 prepare = conexion.prepareStatement(sql);
@@ -1401,14 +1400,14 @@ public class dashboardController {
     //actualizar cliente
     public void clientesActualizarBoton(){
         String sql = "UPDATE public.clientes "
-                + "SET cedula_cliente = '" + cedulaCodigoClienteAddField.getText() + "', "
+                + "SET cedula_cliente = '" + cedulaLetraClienteCombo.getSelectionModel().getSelectedItem() + cedulaCodigoClienteAddField.getText() + "', "
                 + "nombres = '" + nombreClienteAddField.getText() + "', "
                 + "apellidos = '" + apellidoClienteAddField.getText() + "', "
                 + "telefono_movil = '" + telefonoClienteAddField.getText() + "', "
                 + "direccion = '" + direccionClienteAddField.getText() + "', "
                 + "sexo = '" + sexoClienteAddCombo.getText() + "', "
                 + "estatus = '" + (String) estatusClienteAddCombo.getSelectionModel().getSelectedItem() + "' WHERE cedula_cliente = '"
-                + cedulaCodigoClienteAddField.getText()+"' ";
+                + cedulaLetraClienteCombo.getSelectionModel().getSelectedItem() + cedulaCodigoClienteAddField.getText()+"' ";
 
         Alert alert;
         conexion = conexionBdd.conexion();
