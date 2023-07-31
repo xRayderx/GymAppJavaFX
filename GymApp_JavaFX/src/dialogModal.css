@@ -1,0 +1,6 @@
+.myDialog {
+    -fx-background-color:  #e6f1ff;
+    -fx-text-fill:  #0d121a;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
